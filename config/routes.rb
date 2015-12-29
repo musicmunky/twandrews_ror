@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :timesheets
+  devise_for :users
+  resources :tools
+  resources :projects
   get 'about', to: 'about#index', as: :about
   get 'about/index'
 

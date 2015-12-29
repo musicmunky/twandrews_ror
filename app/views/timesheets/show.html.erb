@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Month:</strong>
+  <%= @timesheet.month %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @timesheet.year %>
+</p>
+
+<p>
+  <strong>Expected hours:</strong>
+  <%= @timesheet.expected_hours %>
+</p>
+
+<%= link_to 'Edit', edit_timesheet_path(@timesheet) %> |
+<%= link_to 'Back', timesheets_path %>

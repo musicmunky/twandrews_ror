@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
-  layout "jumbotron"
+	layout "jumbotron"
 
-  def index
-    # Hi!
-  end
+	def index
+		# Hi!
+	end
 end
