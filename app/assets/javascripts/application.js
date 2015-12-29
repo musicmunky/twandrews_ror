@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require fusionlib
+//= require twa_ror
 // require_tree .

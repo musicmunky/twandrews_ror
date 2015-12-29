@@ -7,8 +7,10 @@
 			<%= render partial: "shared/nav" %>
 			<!-- Begin page content -->
 			<div class="container" style="padding-top:40px;">
+				<div style="visibility:hidden;">
 				<p class="notice"><%= notice %></p>
 				<p class="alert"><%= alert %></p>
+				</div>
 				<%= yield :main %>
 				<%#= yield %>
 			</div>
