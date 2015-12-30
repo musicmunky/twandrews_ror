@@ -1,29 +1,29 @@
-<%= form_for(@tool) do |f| %>
-  <% if @tool.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tool.errors.count, "error") %> prohibited this tool from being saved:</h2>
+<%= form_for(@tool, html: { class: "rails_form", style: 'height:400px;' }) do |f| %>
+	<% if @tool.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@tool.errors.count, "error") %> prohibited this tool from being saved:</h2>
+			<ul>
+			<% @tool.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-      <ul>
-      <% @tool.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :link %><br>
-    <%= f.text_field :link %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<div class="field w100fl">
+		<%= f.label :name %><br>
+		<%= f.text_field :name, { class: "txt100", style: "" } %>
+	</div>
+	<div class="field w100fl">
+		<%= f.label :link %><br>
+		<%= f.text_field :link, { class: "txt100", style: "" } %>
+	</div>
+	<div class="field w100fl">
+		<%= f.label :description %><br>
+		<%= f.text_area :description, { class: "txt100", style: "height:150px" } %>
+	</div>
+	<div class="actions w100fl">
+		<%= f.submit "Submit", { class: "btn btn-success", style: "float:left;width:150px;", onclick: "return checkToolForm();" } %>
+		<%= link_to 'Back', tools_path, { class: "btn btn-primary", style: "float:right;width:150px;" } %>
+	</div>
 <% end %>

@@ -29,12 +29,11 @@
  -->
         <li class="<%= is_active('some_route') %>"><%= link_to("Projects", projects_path) %></li>
         <li class="<%#= is_active('some_route') %>"><%= link_to("Tools", tools_path) %></li>
-        <li class="<%= is_active('some_route') %>"><%= link_to("Resume", root_path()) %></li>
+        <li class="<%= is_active('some_route') %>"><%= link_to("Resume", root_path) %></li>
+		<li class="<%= is_active('about') %>"><%= link_to("About", about_path) %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="<%= is_active('about') %>">
-          <%= link_to("About", about_path()) %>
-        </li>
+
 		<% if user_signed_in? %>
 			<li>
 				<%= link_to(current_user.get_name, edit_user_registration_path, { class: "navlink", style: "text-decoration:none;color:#9D9D9D" }) %> |
@@ -49,14 +48,5 @@
     </div><!--/.nav-collapse -->
   </div>
 </div>
-
-						<p class="navbar-text" style="margin-left:15px;">
-
-
-
-								<%= link_to('Login', new_user_session_path, { class: "navlink", style:"text-decoration:none;color:#9D9D9D;" })  %>
-								or <%= link_to('Sign up', new_user_registration_path, { class: "navlink", style: "text-decoration:none;color:#9D9D9D;"}) %>
-
-						</p>
 
 

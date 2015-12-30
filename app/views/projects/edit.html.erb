@@ -1,6 +1,6 @@
-<h1>Editing Project</h1>
+<% content_for :main do %>
+<h3>Editing Project: <%= @project.name.html_safe %></h3>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
+<% end %>
