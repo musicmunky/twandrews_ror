@@ -21,10 +21,10 @@
 	<tbody>
 		<% @tools.each do |tool| %>
 			<tr>
-				<td><a style="color:#204d74;" title="Edit <%= tool.name %>" href="<%= edit_tool_path(tool) %>"><i class="glyphicon glyphicon-edit"></i></a></td>
-				<td><%= link_to tool.name, tool.link, target: "_blank" %></td>
-				<td><%= tool.description %></td>
-				<td>
+				<td class="vam"><a style="color:#204d74;" title="Edit <%= tool.name %>" href="<%= edit_tool_path(tool) %>"><i class="glyphicon glyphicon-edit"></i></a></td>
+				<td class="vam"><%= link_to tool.name, tool.link, target: "_blank" %></td>
+				<td class="vam"><%= tool.description %></td>
+				<td class="vam">
 					<%= link_to tool, method: :delete, data: { confirm: 'Are you sure you want to delete this tool?' }, style: "color:#C9302C;" do %>
 						<i class="glyphicon glyphicon-trash"></i>
 					<% end %>

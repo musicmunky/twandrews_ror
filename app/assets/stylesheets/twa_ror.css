@@ -20,6 +20,10 @@ html, body {
 	display: -webkit-inline-box;
 }
 
+.vam {
+	vertical-align:middle !important;
+}
+
 a {
 	text-decoration:none !important;
 	outline:none !important;
