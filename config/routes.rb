@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
 
+  resources :resume_entries
 	resources :timesheets
 	devise_for :users, :controllers => { registrations: 'registrations' }
 	resources :tools
