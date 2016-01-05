@@ -1,41 +1,43 @@
-<%= form_for(@resume_entry) do |f| %>
-  <% if @resume_entry.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@resume_entry.errors.count, "error") %> prohibited this resume_entry from being saved:</h2>
+<%= form_for(@resume_entry, html: { class: "rails_form", style: 'height:650px;' }) do |f| %>
 
-      <ul>
-      <% @resume_entry.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<% if @resume_entry.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@resume_entry.errors.count, "error") %> prohibited this resume_entry from being saved:</h2>
+			<ul>
+			<% @resume_entry.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
 
-  <div class="field">
-    <%= f.label :position %><br>
-    <%= f.text_field :position %>
-  </div>
-  <div class="field">
-    <%= f.label :company %><br>
-    <%= f.text_field :company %>
-  </div>
-  <div class="field">
-    <%= f.label :company_url %><br>
-    <%= f.text_field :company_url %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.date_select :start_date %>
-  </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.date_select :end_date %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<div class="field w100fl">
+		<%= f.label :position %><br>
+		<%= f.text_field :position, { class: "txt100", style: "" } %>
+	</div>
+	<div class="field w100fl">
+		<%= f.label :company %><br>
+		<%= f.text_field :company, { class: "txt100", style: "" } %>
+	</div>
+	<div class="field w100fl">
+		<%= f.label :company_url %><br>
+		<%= f.text_field :company_url, { class: "txt100", style: "" } %>
+	</div>
+	<div class="field w50fl">
+		<%= f.label :start_date %><br>
+		<%= f.date_select :start_date, { :order => [:month, :year], :start_year => 1990, :discard_day => true }, { class: "", style: "width:40%;margin-right:10px;float:left;" } %>
+	</div>
+	<div class="field w50fl">
+		<%= f.label :end_date %><br>
+		<%= f.date_select :end_date, { :order => [:month, :year], :start_year => 1990, :discard_day => true }, { class: "", style: "width:40%;margin-right:10px;float:left;" } %>
+	</div>
+	<div class="field w100fl">
+		<%= f.label :description %><br>
+		<%= f.text_area :description, { class: "txt100", style: "height:150px" } %>
+	</div>
+	<div class="actions w100fl">
+		<%= f.submit "Submit", { class: "btn btn-success", style: "float:left;width:150px;", onclick: "return checkResumeForm();" } %>
+		<%= link_to 'Back', resume_entries_path, { class: "btn btn-primary", style: "float:right;width:150px;" } %>
+	</div>
+
 <% end %>

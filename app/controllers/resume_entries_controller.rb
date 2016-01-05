@@ -26,15 +26,21 @@ class ResumeEntriesController < ApplicationController
   def create
     @resume_entry = ResumeEntry.new(resume_entry_params)
 
+	logger.debug "\n\n\n\n\n\n\nRESUME ENTRY START IS: #{@resume_entry.start_date}\n\n\n\n\n\n\n"
+	logger.debug "\n\n\n\n\n\n\nRESUME ENTRY END IS: #{@resume_entry.end_date}\n\n\n\n\n\n\n"
+
+#=begin
+
     respond_to do |format|
       if @resume_entry.save
-        format.html { redirect_to @resume_entry, notice: 'Resume entry was successfully created.' }
+        format.html { redirect_to resume_url, notice: 'Resume entry was successfully created.' }
         format.json { render :show, status: :created, location: @resume_entry }
       else
         format.html { render :new }
         format.json { render json: @resume_entry.errors, status: :unprocessable_entity }
       end
     end
+#=end
   end
 
   # PATCH/PUT /resume_entries/1
@@ -42,7 +48,7 @@ class ResumeEntriesController < ApplicationController
   def update
     respond_to do |format|
       if @resume_entry.update(resume_entry_params)
-        format.html { redirect_to @resume_entry, notice: 'Resume entry was successfully updated.' }
+        format.html { redirect_to resume_url, notice: 'Resume entry was successfully updated.' }
         format.json { render :show, status: :ok, location: @resume_entry }
       else
         format.html { render :edit }

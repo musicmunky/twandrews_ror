@@ -1,8 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% content_for :main do %>
 
-<h1>Listing Resume Entries</h1>
+<h3>Resume Entries</h3>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Position</th>
@@ -35,3 +35,4 @@
 <br>
 
 <%= link_to 'New Resume entry', new_resume_entry_path %>
+<% end %>

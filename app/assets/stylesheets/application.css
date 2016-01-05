@@ -19,6 +19,6 @@
  *= require jumbotron
  * require_tree .
  *= require twa_ror
- *= require_self
+ * require_self
  */
 

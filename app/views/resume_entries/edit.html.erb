@@ -1,6 +1,4 @@
-<h1>Editing Resume Entry</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @resume_entry %> |
-<%= link_to 'Back', resume_entries_path %>
+<% content_for :main do %>
+	<h3>Editing Resume Entry</h3>
+	<%= render 'form' %>
+<% end %>

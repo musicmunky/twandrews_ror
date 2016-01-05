@@ -1,4 +1,5 @@
 <head>
+	<%= favicon_link_tag %>
 	<title><%= "#{Rails.application.config.app_name}" %><%= content_for?(:title) ?  " | #{content_for(:title)}" : "" %></title>
 	<%= stylesheet_link_tag "application", media: "all" %>
 	<%= stylesheet_link_tag params[:controller] %>

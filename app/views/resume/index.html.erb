@@ -1,5 +1,29 @@
 <% content_for :main do %>
-<h3>Tim's Resume</h3>
-<p>He's working at NASA!</p>
-<p>SIZE IS: <%= @resume_entries.size %></p>
+	<h3>Tim's Resume</h3>
+	<span class="w100fl heading_span">Summary:</span>
+<!-- <p></p> //-->
+
+	I have 8 years of professional experience in software engineering and systems administration. I have extensive experience with Ruby on Rails, PHP, and Java programming, MySQL and MSSQL Server, HTML, XML, JavaScript and CSS. I am currently employed at Fusion Technology, LLC. Prior to this, I spent five years with SCD Information Technology, where I took courses on the subject of Cloudera Server Management and Development. I am currently working on my M.Sc. in Computer Science. As part of my undergraduate work I did extensive research in the field of Dynamical Systems (chaos theory), and assisted in the reengineering of various mathematics tools using a cross-platform language (Java) to build an open source graphing application capable of graphing and analyzing:
+	<ul>
+		<li>Standard functions (Real polynomials, trig functions, etc)</li>
+		<li>Parametric Equations</li>
+		<li>Differential Equations and Systems of any order</li>
+		<li>Iterated Maps and Iterated Map Systems</li>
+		<li>Bifurcation Diagrams</li>
+		<li>Lyapunov Exponents</li>
+		<li>Iterated Systems (fractals)</li>
+	</ul>
+
+	<span class="w100fl heading_span">Previous Experience:</span>
+	<% @resume_entries.each do |entry| %>
+		<div class="w100fl">
+			<strong><i><%= entry.position %></i></strong><br>
+			<% diff = entry.date_difference %>
+			<span class="w100fl"><%= entry.company %></span>
+			<span class="w100fl"><%= entry.start_date.strftime("%b, %Y") %> - <%= entry.end_date.strftime("%b, %Y") %> <i>(<%= "#{diff[0]} years, #{diff[1]} months" %>)</i></span>
+			<p><%= entry.description.html_safe %></p>
+		</div>
+	<% end %>
+<!--<p>SIZE IS: <%#= @resume_entries.size %></p>//-->
+
 <% end %>
