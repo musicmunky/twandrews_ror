@@ -26,10 +26,8 @@ class ResumeEntriesController < ApplicationController
   def create
     @resume_entry = ResumeEntry.new(resume_entry_params)
 
-	logger.debug "\n\n\n\n\n\n\nRESUME ENTRY START IS: #{@resume_entry.start_date}\n\n\n\n\n\n\n"
-	logger.debug "\n\n\n\n\n\n\nRESUME ENTRY END IS: #{@resume_entry.end_date}\n\n\n\n\n\n\n"
-
-#=begin
+#	logger.debug "\n\n\n\n\n\n\nRESUME ENTRY START IS: #{@resume_entry.start_date}\n\n\n\n\n\n\n"
+#	logger.debug "\n\n\n\n\n\n\nRESUME ENTRY END IS: #{@resume_entry.end_date}\n\n\n\n\n\n\n"
 
     respond_to do |format|
       if @resume_entry.save
@@ -40,7 +38,6 @@ class ResumeEntriesController < ApplicationController
         format.json { render json: @resume_entry.errors, status: :unprocessable_entity }
       end
     end
-#=end
   end
 
   # PATCH/PUT /resume_entries/1

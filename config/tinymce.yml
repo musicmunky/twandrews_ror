@@ -1,0 +1,6 @@
+toolbar:
+  - styleselect | bold italic | fontsizeselect fontselect | undo redo | alignleft aligncenter alignright | bullist numlist | outdent indent
+  - image | link
+#plugins:
+#  - image
+#  - link
