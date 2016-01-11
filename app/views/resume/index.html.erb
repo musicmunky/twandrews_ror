@@ -32,7 +32,7 @@
 	<!-- Experience section //-->
 	<span class="w100fl resume_heading">Previous Experience:</span>
 	<% @resume_entries.each do |resume_entry| %>
-		<div class="w100fl resume_entry">
+		<div class="w100fl resume_entry resume_position">
 			<strong style="font-size:1.15em;"><i><%= resume_entry.position %></i></strong><br>
 			<% diff = resume_entry.date_difference %>
 			<span class="w100fl"><%= resume_entry.company %></span>

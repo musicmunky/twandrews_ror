@@ -1,4 +1,3 @@
-
 .resume_heading {
 	font-size:1.25em;
 	font-weight:bold;
@@ -9,6 +8,12 @@
 	margin-left:15px;
 	margin-bottom:15px;
 }
+
+.resume_position {
+	border-bottom: 1px solid #CCC;
+}
+
+.resume_position:last-child { border-bottom: none; }
 
 .nav > li > a {
 	display: -webkit-inline-box;

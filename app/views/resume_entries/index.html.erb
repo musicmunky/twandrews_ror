@@ -7,8 +7,7 @@
     <tr>
       <th>Position</th>
       <th>Company</th>
-      <th>Company url</th>
-      <th style="width:400px">Description</th>
+<!--      <th style="width:400px">Description</th>//-->
       <th>Start date</th>
       <th>End date</th>
       <th colspan="2"></th>
@@ -19,12 +18,11 @@
     <% @resume_entries.each do |resume_entry| %>
       <tr>
         <td><%= resume_entry.position %></td>
-        <td><%= resume_entry.company %></td>
-        <td><%= resume_entry.company_url %></td>
-        <td><% begin %><%= resume_entry.description.html_safe %><% rescue;end %></td>
-        <td><%= resume_entry.start_date.strftime("%b %d, %Y") %></td>
-        <td><%= resume_entry.end_date.strftime("%b %d, %Y") %></td>
-<!--        <td><%= link_to 'Show', resume_entry %></td>//-->
+        <td><a href="resume_entry.company_url" target="_blank"><%= resume_entry.company %></a></td>
+<!--    <td><%# begin %><%#= resume_entry.description.html_safe %><%# rescue;end %></td>//-->
+        <td><%= resume_entry.start_date.strftime("%b, %Y") %></td>
+        <td><%= resume_entry.end_date.strftime("%b, %Y") %></td>
+<!--    <td><%= link_to 'Show', resume_entry %></td>//-->
         <td><%= link_to 'Edit', edit_resume_entry_path(resume_entry) %></td>
         <td><%= link_to 'Destroy', resume_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
