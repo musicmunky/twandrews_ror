@@ -24,6 +24,9 @@
 		<%= f.label :company_url %><br>
 		<%= f.text_field :company_url, { class: "txt100", style: "" } %>
 	</div>
+	<div class="field w100fl">
+		<%= f.label :is_current, "Current Position?" %><%= f.check_box :is_current %>
+	</div>
 	<div class="field w50fl">
 		<%= f.label :start_date %><br>
 		<%= f.date_select :start_date, { :order => [:month, :year], :start_year => 1990, :discard_day => true }, { class: "", style: "width:40%;margin-right:10px;float:left;" } %>

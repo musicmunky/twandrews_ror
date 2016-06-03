@@ -9,12 +9,18 @@
 
 //create the FUSION object
 var FUSION = FUSION || {};
+var $F = FUSION;
 
 var loadjq = window.jQuery ? true : false;
 if(!loadjq){
 	console.log("NOTICE: jQuery library is not loaded");
 }
 
+
+// Example uses for array.clean:
+// test = new Array("","One","Two","", "Three","","Four").clean("");
+// test2 = [1,2,,3,,3,,,,,,4,,4,,5,,6,,,,];
+// test2.clean(undefined);
 Array.prototype.clean = function(deleteValue) {
 	for (var i = 0; i < this.length; i++) {
 		if (this[i] == deleteValue) {
@@ -24,10 +30,6 @@ Array.prototype.clean = function(deleteValue) {
 	}
 	return this;
 };
-
-//test = new Array("","One","Two","", "Three","","Four").clean("");
-//test2 = [1,2,,3,,3,,,,,,4,,4,,5,,6,,,,];
-//test2.clean(undefined);
 
 
 //Getter methods
@@ -144,18 +146,13 @@ FUSION.get = {
 	//don't really have a "size" per se
 	objSize: function(obj) {
 		try {
-			var hasNonLeafNodes = false;
 			var childCount = 0;
-
 			for(var child in obj)
 			{
-				if(typeof obj[child] === 'object')
-				{
+				if(typeof obj[child] === 'object') {
 					childCount += FUSION.get.objSize(obj[child]);
-					hasNonLeafNodes = true;
 				}
-				else
-				{
+				else {
 					childCount++;
 				}
 			}
@@ -163,7 +160,7 @@ FUSION.get = {
 		}
 		catch(err) {
 			FUSION.error.logError(err);
-			return 0;
+			return -1;
 		}
 	},
 
@@ -248,12 +245,28 @@ FUSION.set = {
 
 	//Set the mouse cursor to the "waiting" icon
 	overlayMouseWait: function() {
-		jQuery("body").addClass("wait");
+		var bd = document.body;
+		var cn = bd.className;
+
+		//body has no class applied
+		if(FUSION.lib.isBlank(cn)) {
+			bd.className = "wait";
+		}
+		else {
+			//body has existing css classes, don't apply
+			//the 'wait' class more than once
+			var cn_arry = cn.split(" ");
+			var cn_indx = cn_arry.indexOf("wait");
+			if(cn_indx == -1) {
+				bd.className += " wait";
+			}
+		}
 	},
 
 	//Set the mouse cursor back to the "default" icon
 	overlayMouseNormal: function() {
-		jQuery("body").removeClass("wait");
+		//remove the 'wait' class from the body
+		document.body.className = document.body.className.replace(/(?:^|\s)wait(?!\S)/, "");
 	},
 
 	//set the selected text of a select box / dropdown list
@@ -324,13 +337,14 @@ FUSION.remove = {
 	node: function(el) {
 		try {
 			var elm = FUSION.get.node(el);
-			var par = elm.parentNode;
-			par.removeChild(elm);
+			if(elm !== null) {
+				var par = elm.parentNode;
+				par.removeChild(elm);
+			}
 			return true;
 		}
 		catch(err) {
 			FUSION.error.logError(err);
-			FUSION.error.showError(err);
 		}
 	},
 };

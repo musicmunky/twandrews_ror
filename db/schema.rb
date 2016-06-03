@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160105131935) do
+ActiveRecord::Schema.define(version: 20160111181602) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20160105131935) do
     t.text     "description", limit: 65535
     t.date     "start_date"
     t.date     "end_date"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.boolean  "is_current",                default: false
   end
 
   create_table "timesheets", force: :cascade do |t|
