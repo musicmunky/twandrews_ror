@@ -25,7 +25,7 @@
 		<%= f.text_field :company_url, { class: "txt100", style: "" } %>
 	</div>
 	<div class="field w100fl">
-		<%= f.label :is_current, "Current Position?" %><%= f.check_box :is_current %>
+		<%= f.label :is_current, "Current Position?", { style: "float:left;" } %><%= f.check_box :is_current, { style: "float:left;margin-top:5px;margin-left:10px;" } %>
 	</div>
 	<div class="field w50fl">
 		<%= f.label :start_date %><br>
@@ -42,7 +42,7 @@
 	</div>
 	<div class="actions w100fl">
 		<%= f.submit "Submit", { class: "btn btn-success", style: "float:left;width:150px;", onclick: "return checkResumeForm();" } %>
-		<%= link_to 'Back', resume_entries_path, { class: "btn btn-primary", style: "float:right;width:150px;" } %>
+		<%= link_to 'Back', resume_path, { class: "btn btn-primary", style: "float:right;width:150px;" } %>
 	</div>
 
 <% end %>

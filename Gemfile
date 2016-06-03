@@ -39,6 +39,9 @@ gem 'acts_as_commentable'
 gem 'awesome_print', require:"ap"
 gem 'tinymce-rails'
 
+#gem 'hairtrigger'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

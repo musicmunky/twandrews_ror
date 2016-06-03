@@ -1,16 +1,19 @@
 <% content_for :main do %>
-	<h3>Tim's Resume</h3>
+	<h3>Tim's Resume
+		<% if user_signed_in? %>
+			<%= link_to 'New Entry', new_resume_entry_path, { class: "btn btn-default btn-xs", style: "float:right;margin-top:2px;padding-left:10px;padding-right:10px;" } %>
+		<% end %>
+	</h3>
 
 	<!-- Summary section //-->
 	<span class="w100fl resume_heading">Summary:</span>
 	<div class="w100fl resume_entry">
 		I have 8 years of professional experience in software engineering and systems administration.
 		I have extensive experience with Ruby on Rails, PHP, and Java programming, MySQL and MSSQL Server, HTML, XML, JavaScript and CSS.
-		I am currently employed at Fusion Technology, LLC.
+		I am currently employed at a.i. Solutions, and previously was employed with Fusion Technology, a small government contractor working in the Intelligence Community.<br />
 		Prior to this, I spent five years with SCD Information Technology, where I took courses on the subject of Cloudera Server Management and Development.
 		As part of my undergraduate work I did extensive research in the field of Dynamical Systems (chaos theory), and assisted in the reengineering of various mathematics tools using a cross-platform language (Java) to build an open source graphing application capable of graphing and analyzing:
-		<ul>
-			<li>Standard functions (Real polynomials, trig functions, etc)</li>
+		<ul><li>Standard functions (Real polynomials, trig functions, etc)</li>
 			<li>Parametric Equations</li>
 			<li>Differential Equations and Systems of any order</li>
 			<li>Iterated Maps and Iterated Map Systems</li>
@@ -20,27 +23,64 @@
 		</ul>
 	</div>
 
+	<!-- Skills section //-->
+	<span class="w100fl resume_heading">Skills Overview:</span>
+	<div class="w100fl resume_entry">
+		<ul><li>Ruby on Rails 3.x and 4.x</li>
+			<li>PHP 5.x</li>
+			<li>Java 6/7/8</li>
+			<li>Perl 5.x</li>
+			<li>Javascript and various libraries (jQuery, threeJS, d3.js, Highcharts, etc)</li>
+			<li>MySQL, Oracle, PostgreSQL and MSSQL Server database systems</li>
+			<li>XML, HTML/HTML5, and CSS (along with XSD development and design)</li>
+			<li>Apache / Tomcat, Nginx</li>
+			<li>CentOS 6.x / 7.x (and RHEL), Ubuntu Server 12.x, 14.x</li>
+			<li>Excellent written and verbal communication skills</li>
+			<li>Perform server/network maintenance as necessary (CentOS/RHEL, Ubuntu, etc, Windows Server 2008, 2012).</li>
+			<li>General IT support, including hardware/software installation, computer setup, and trouble-shooting.</li>
+		</ul>
+	</div>
+
+
 	<!-- Education section //-->
 	<span class="w100fl resume_heading">Education:</span>
 	<div class="w100fl resume_entry">
 		Bachelor of Science, Computer Science<br>
 		Bachelor of Science, Mathematics<br>
 		Graduated <i>cum laude</i> May, 2009, University of Hartford<br>
-		Currently working toward a Master of Science in Computer Science
+		Currently working toward a Master of Science in Computer Science<br>
+		<p></p>
 	</div>
 
 	<!-- Experience section //-->
 	<span class="w100fl resume_heading">Previous Experience:</span>
 	<% @resume_entries.each do |resume_entry| %>
-		<div class="w100fl resume_entry resume_position">
-			<strong style="font-size:1.15em;"><i><%= resume_entry.position %></i></strong><br>
-			<% diff = resume_entry.date_difference %>
-			<span class="w100fl"><%= resume_entry.company %></span>
-			<span class="w100fl">
-				<%= resume_entry.start_date.strftime("%b, %Y") %> - <%= resume_entry.end_date.strftime("%b, %Y") %>
-				<i>(<%= "#{diff[0]} years, #{diff[1]} months" %>)</i>
-			</span>
-			<p><%= resume_entry.description.html_safe %></p>
+		<div class="w100fl resume_entry">
+			<div class="resume_position">
+<!--				<strong style="font-size:1.15em;"><i><%= resume_entry.position %></i></strong><br>//-->
+				<h4>
+					<i><%= resume_entry.position %></i>
+					<% if user_signed_in? %>
+						<%= link_to 'Edit', edit_resume_entry_path(resume_entry), { class: "btn btn-default btn-xs", style: "float:right;margin-top:2px;padding-left:10px;padding-right:10px;" } %>
+					<% end %>
+				</h4>
+				<% diff = resume_entry.date_difference %>
+				<span class="w100fl">
+					<% if resume_entry.company_url.nil? or resume_entry.company_url.blank? %>
+						<%= resume_entry.company %>
+					<% else %>
+						<a href="<%= resume_entry.company_url %>" target="_blank"><%= resume_entry.company %></a>
+					<% end %>
+				</span>
+				<span class="w100fl">
+					<% enddate = resume_entry.is_current? ? "Present" : resume_entry.end_date.strftime("%b, %Y") %>
+					<%  %>
+					<%  %>
+					<%= resume_entry.start_date.strftime("%b, %Y") %> - <%= enddate %>
+					<i>(<%= "#{diff[0]} years, #{diff[1]} months" %>)</i>
+				</span>
+				<p><%= resume_entry.description.html_safe %></p>
+			</div>
 		</div>
 	<% end %>
 

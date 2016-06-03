@@ -22,7 +22,6 @@
 <!--    <td><%# begin %><%#= resume_entry.description.html_safe %><%# rescue;end %></td>//-->
         <td><%= resume_entry.start_date.strftime("%b, %Y") %></td>
         <td><%= resume_entry.end_date.strftime("%b, %Y") %></td>
-<!--    <td><%= link_to 'Show', resume_entry %></td>//-->
         <td><%= link_to 'Edit', edit_resume_entry_path(resume_entry) %></td>
         <td><%= link_to 'Destroy', resume_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
