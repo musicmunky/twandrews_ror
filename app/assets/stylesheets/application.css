@@ -17,6 +17,7 @@
  *= require typography
  *= require dashboard
  *= require jumbotron
+ *= require fusionlib
  * require_tree .
  *= require twa_ror
  * require_self

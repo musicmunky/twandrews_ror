@@ -25,6 +25,13 @@
 	width:100%;
 }
 
+.edit_entry_btn {
+	float:right;
+	margin-top:2px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
 .resume_entry:last-child { border-bottom: none; }
 
 .nav > li > a {
@@ -33,6 +40,11 @@
 
 .vam {
 	vertical-align:middle !important;
+}
+
+.project_cell {
+	line-height:2.4em !important;
+	font-size:18px;
 }
 
 a {

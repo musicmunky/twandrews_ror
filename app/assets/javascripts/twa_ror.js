@@ -1,4 +1,23 @@
 
+function showProjectToolInfo(i) {
+	var id = i || "";
+	if(FUSION.lib.isBlank(id)) {
+		console.log("No tool or project id given");
+		return false;
+	}
+
+	try {
+		var desc = FUSION.get.node(id).value;
+		if(!FUSION.lib.isBlank(desc)) {
+			FUSION.lib.alert({"message":desc, "height":200, "button-text":"Close"});
+		}
+	}
+	catch(err) {
+		FUSION.error.logError(err);
+		return false;
+	}
+}
+
 function checkUserForm()
 {
 	var fname = FUSION.get.node("user_first_name").value;
