@@ -4,8 +4,20 @@ Rails.application.routes.draw do
   resources :resume_entries
 	resources :timesheets
 	devise_for :users, :controllers => { registrations: 'registrations' }
-	resources :tools
-	resources :projects
+
+	resources :tools do
+		member do
+			get "getToolInfo"
+		end
+	end
+
+	resources :projects do
+		member do
+			get "getProjectInfo"
+			get "checkAppStatus"
+		end
+	end
+
 	get 'about', to: 'about#index', as: :about
 	get 'about/index'
 
@@ -14,6 +26,8 @@ Rails.application.routes.draw do
 
 	root to: 'welcome#index'
 	get 'welcome/index'
+
+
 
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".

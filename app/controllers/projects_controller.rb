@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+	before_action :set_project, only: [:show, :edit, :update, :destroy]
 
 	# GET /projects
 	# GET /projects.json
@@ -21,6 +21,71 @@ class ProjectsController < ApplicationController
 	# GET /projects/1/edit
 	def edit
 	end
+
+
+	def getProjectInfo
+
+		pid = params[:item_id]
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			@proj = Project.find(pid.to_i)
+			project = @proj.attributes
+			content['type'] = "project"
+			content['project'] = project
+
+			response['status'] = "success"
+			response['message'] = "Returning data for project #{@proj.name}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
+
+	end
+
+
+	def checkAppStatus
+		require 'checkserver'
+		@chkserver = CheckServer.new
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			projects = {}
+			Project.all.each do |project|
+				projects[project.id] = @chkserver.website_online?(project.link)
+			end
+			content['projects'] = projects
+
+			response['status'] = "success"
+			response['message'] = "Returning server data for all projects"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
+
+
+	end
+
 
 	# POST /projects
 	# POST /projects.json
