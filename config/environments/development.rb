@@ -1,6 +1,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+	config.web_console.whiny_requests = false
+
 	config.action_mailer.default_url_options = { host: 'localhost', port: 3100 }
 
 # 	config.web_console.whitelisted_ips = '45.55.189.112'
