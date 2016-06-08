@@ -1,10 +1,12 @@
 class ProjectsController < ApplicationController
 	before_action :set_project, only: [:show, :edit, :update, :destroy]
+	require 'timeout'
 
 	# GET /projects
 	# GET /projects.json
 	def index
-		@projects = Project.all.order(:status)
+		@cmp_projects = Project.where(status: "completed").order("id ASC")
+		@dev_projects = Project.where(status: "in_development").order("id ASC")
 		@tools = Tool.all
 	end
 
@@ -20,6 +22,59 @@ class ProjectsController < ApplicationController
 
 	# GET /projects/1/edit
 	def edit
+	end
+
+
+	# POST /projects/1/addEditProject
+	def addEditProject
+		require 'checkserver'
+
+		pid = params[:item_id]
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			new_or_edit = "new"
+			update_success = false
+			project_params = { :name => params['name'], :link => params['link'], :status => params['status'], :description => params['description']}
+			if pid.to_i == 0 # new project
+				@project = Project.new(project_params)
+				update_success = @project.save
+			else
+				new_or_edit = "edit"
+				@project = Project.find(pid.to_i)
+				update_success = @project.update(project_params)
+			end
+
+			@chkserver = CheckServer.new
+			up_down = false
+			begin
+# 				up_down = @chkserver.website_online?(@project.link)
+				up_down = Timeout::timeout(5) { @chkserver.website_online?(@project.link) }
+			rescue
+			end
+
+			status = update_success ? "success" : "failure"
+			message = update_success ? "Project updated successfully!" : "Error during project update"
+			content['project'] = @project.attributes
+			content['type'] = "project"
+			content['new_or_edit'] = new_or_edit
+			content['up_or_down'] = up_down
+
+			response['status'] = "success"
+			response['message'] = "Returning data for #{@project.name}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
 	end
 
 
@@ -70,11 +125,11 @@ class ProjectsController < ApplicationController
 			end
 			content['projects'] = projects
 
-			response['status'] = "success"
+			response['status']  = "success"
 			response['message'] = "Returning server data for all projects"
 			response['content'] = content
 		rescue => error
-			response['status'] = "failure"
+			response['status']  = "failure"
 			response['message'] = "Error: #{error.message}"
 			response['content'] = error.backtrace
 		ensure
@@ -82,8 +137,6 @@ class ProjectsController < ApplicationController
 				format.html { render :json => response.to_json }
 			end
 		end
-
-
 	end
 
 

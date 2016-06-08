@@ -22,6 +22,49 @@ class ToolsController < ApplicationController
 	end
 
 
+	# POST /tools/1/addEditTool
+	def addEditTool
+		tid = params[:item_id]
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			new_or_edit = "new"
+			update_success = false
+			tool_params = { :name => params['name'], :link => params['link'], :description => params['description']}
+			if tid.to_i == 0 # new tool
+				@tool = Tool.new(tool_params)
+				update_success = @tool.save
+			else
+				new_or_edit = "edit"
+				@tool = Tool.find(tid.to_i)
+				update_success = @tool.update(tool_params)
+			end
+
+			status = update_success ? "success" : "failure"
+			message = update_success ? "Tool updated successfully!" : "Error during tool update"
+			content['project'] = @tool.attributes
+			content['type'] = "tool"
+			content['new_or_edit'] = new_or_edit
+
+			response['status'] = "success"
+			response['message'] = "Returning data for #{@tool.name}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
+	end
+
+
 	def getToolInfo
 
 		pid = params[:item_id]
