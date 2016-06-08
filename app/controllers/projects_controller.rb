@@ -45,13 +45,15 @@ class ProjectsController < ApplicationController
 			else
 				new_or_edit = "edit"
 				@project = Project.find(pid.to_i)
+				old_status = @project.status
+				new_status = params['status']
+				content['old_status'] = old_status
 				update_success = @project.update(project_params)
 			end
 
 			@chkserver = CheckServer.new
 			up_down = false
 			begin
-# 				up_down = @chkserver.website_online?(@project.link)
 				up_down = Timeout::timeout(5) { @chkserver.website_online?(@project.link) }
 			rescue
 			end
