@@ -66,7 +66,6 @@ class ToolsController < ApplicationController
 
 
 	def getToolInfo
-
 		pid = params[:item_id]
 
 		response = {}
@@ -93,7 +92,36 @@ class ToolsController < ApplicationController
 				format.html { render :json => response.to_json }
 			end
 		end
+	end
 
+
+	def deleteTool
+		pid = params[:item_id]
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			@tool = Tool.find(pid.to_i)
+			tool = @tool.attributes
+			content['type'] = "tool"
+			content['project'] = tool
+			@tool.destroy
+
+			response['status'] = "success"
+			response['message'] = "Successfully deleted tool #{tool['name']}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
 	end
 
 

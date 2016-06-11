@@ -39,22 +39,24 @@ class ProjectsController < ApplicationController
 			new_or_edit = "new"
 			update_success = false
 			project_params = { :name => params['name'], :link => params['link'], :status => params['status'], :description => params['description']}
+			content['old_status'] = ""
+			content['new_status'] = ""
+
 			if pid.to_i == 0 # new project
 				@project = Project.new(project_params)
 				update_success = @project.save
 			else
 				new_or_edit = "edit"
 				@project = Project.find(pid.to_i)
-				old_status = @project.status
-				new_status = params['status']
-				content['old_status'] = old_status
+				content['old_status'] = @project.status
+				content['new_status'] = params['status']
 				update_success = @project.update(project_params)
 			end
 
 			@chkserver = CheckServer.new
 			up_down = false
 			begin
-				up_down = Timeout::timeout(5) { @chkserver.website_online?(@project.link) }
+				up_down = Timeout::timeout(3) { @chkserver.website_online?(@project.link) }
 			rescue
 			end
 
@@ -81,7 +83,6 @@ class ProjectsController < ApplicationController
 
 
 	def getProjectInfo
-
 		pid = params[:item_id]
 
 		response = {}
@@ -123,7 +124,12 @@ class ProjectsController < ApplicationController
 		begin
 			projects = {}
 			Project.all.each do |project|
-				projects[project.id] = @chkserver.website_online?(project.link)
+				up_down = false
+				begin
+					up_down = Timeout::timeout(3) { @chkserver.website_online?(project.link) }
+				rescue
+				end
+				projects[project.id] = up_down
 			end
 			content['projects'] = projects
 
@@ -132,6 +138,36 @@ class ProjectsController < ApplicationController
 			response['content'] = content
 		rescue => error
 			response['status']  = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
+	end
+
+
+	def deleteProject
+		pid = params[:item_id]
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			@proj = Project.find(pid.to_i)
+			project = @proj.attributes
+			content['type'] = "project"
+			content['project'] = project
+			@proj.destroy
+
+			response['status'] = "success"
+			response['message'] = "Successfully deleted project #{project['name']}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
 			response['message'] = "Error: #{error.message}"
 			response['content'] = error.backtrace
 		ensure

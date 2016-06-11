@@ -2,6 +2,7 @@ jQuery(document).ready(function() {
 
 // 	jQuery('.ulnav').on('click', 'a.remlnk', function (event) { removeItem(this.id); });
 	jQuery('.edit_project_link').click(function () { getItemInfo(this.id); });
+	jQuery('.remove_project_link').click(function() { removeItem(this.id) })
 	jQuery("#new_project_link").click(function(){ showAddItem({"project":{"id":0},"type":"project"}); });
 	jQuery("#new_tool_link").click(function(){ showAddItem({"project":{"id":0},"type":"tool"}); });
 
@@ -94,6 +95,69 @@ function updateItemResponse(h)
 		{
 			//add new row to correct table
 			var tbl = FUSION.get.node(typ + "_table");
+			var row = FUSION.lib.createHtmlElement({"type":"tr", "attributes":{"id":typ + "_row_" + iid}});
+			var nametd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell"}});
+			var infotd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
+			var edittd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
+			var rmovtd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
+
+			//create name link and add to td
+			var nametdlink = FUSION.lib.createHtmlElement({"type":"a", "attributes":{"href":itm['link'], "target":"_blank", "id":typ + "_link_" + itm['id']}, "text":itm['name']});
+			nametd.appendChild(nametdlink);
+
+			//create the info icon and link
+			var infotdlink = FUSION.lib.createHtmlElement({"type":"a",
+														   "style":{"color":"#5CB85C"},
+														   "onclick":"showProjectToolInfo('" + typ + "_" + itm['id'] + "_description')",
+														   "attributes":{"href":"javascript:void(0)", "title":$F.lib.titleCase(typ) + " Info"}});
+			var infotditag = FUSION.lib.createHtmlElement({"type":"i", "attributes":{"class":"glyphicon glyphicon-info-sign"}});
+			infotdlink.appendChild(infotditag);
+			infotd.appendChild(infotdlink);
+
+			//create the edit icon and link
+			var edittdlink = FUSION.lib.createHtmlElement({"type":"a",
+														   "style":{"color":"#204d74"},
+														   "onclick":"getItemInfo('" + typ + "_" + itm['id'] + "')",
+														   "attributes":{"href":"javascript:void(0)", "title":"Edit " + itm['name'], "class":"edit_project_link", "id":typ + "_" + itm['id']}});
+			var edittditag = FUSION.lib.createHtmlElement({"type":"i", "attributes":{"class":"glyphicon glyphicon-edit"}});
+			edittdlink.appendChild(edittditag);
+			edittd.appendChild(edittdlink);
+
+			//create the remove icon and link
+			var rmovtdlink = FUSION.lib.createHtmlElement({"type":"a",
+														   "style":{"color":"#C9302C"},
+														   "onclick":"removeItem('" + typ + "_" + itm['id'] + "')",
+														   "attributes":{"href":"javascript:void(0)", "title":"Remove " + itm['name'],
+																		 "class":"remove_project_link", "id":"remove_" + typ + "_" + itm['id']}});
+			var rmovtditag = FUSION.lib.createHtmlElement({"type":"i", "attributes":{"class":"glyphicon glyphicon-trash"}});
+			rmovtdlink.appendChild(rmovtditag);
+			rmovtd.appendChild(rmovtdlink);
+
+			var dscrpt = FUSION.lib.createHtmlElement({"type":"input", "attributes":{"type":"hidden", "id":typ + "_" + iid + "_" + "description", "value":itm['description']}});
+
+			//first append the name td to the row
+			row.appendChild(nametd);
+
+			if(typ == "project") {
+				//if it's a project, create the status and up/down indicator tds and icons
+				var stattd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell"}, "text":$F.lib.titleCase(itm['status'].split("_").join(" "))});
+				var updntd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
+				var classnam = itm['up_or_down'] ? "glyphicon glyphicon-ok server_status_up" : "glyphicon glyphicon-remove server_status_down";
+				var updnspan = FUSION.lib.createHtmlElement({"type":"span", "attributes":{"id":"server_status_span_" + itm['id'], "aria-hidden":"true", "class":classnam}})
+				updntd.appendChild(updnspan);
+				row.appendChild(stattd);
+				row.appendChild(updntd);
+			}
+			//finally append the info/edit/remove tds to the row
+			row.appendChild(infotd);
+			row.appendChild(edittd);
+			row.appendChild(rmovtd);
+			row.appendChild(dscrpt);
+
+			//append the row to the appropriate table/tbody
+			var tid = (typ == "project") ? itm['status'] + "_project_tbody" : "tool_tbody";
+			var tbl = FUSION.get.node(tid);
+			tbl.appendChild(row);
 		}
 		else
 		{
@@ -103,12 +167,33 @@ function updateItemResponse(h)
 			FUSION.get.node(typ + "_" + iid + "_description").value = itm['description'];
 
 			if(typ == "project") {
+				var row = FUSION.get.node("project_row_" + iid);
+				if(hash['old_status'] !== hash['new_status']) {
+					var rowcopy = row;
+					FUSION.remove.node("project_row_" + iid);
+					var tbody = FUSION.get.node(hash['new_status'] + "_project_tbody");
+					var rowid = 0;
+					var target = null;
+					if(tbody.rows.length > 0) {
+						for(var i = 0; i < tbody.rows.length; i++){
+							rowid = parseInt(tbody.rows[i].id.split("_")[2]);
+							if(parseInt(iid) < rowid) {
+								target = tbody.rows[i];
+								tbody.insertBefore(rowcopy, target);
+								break;
+							}
+							else if(i == tbody.rows.length - 1) {
+								tbody.appendChild(rowcopy);
+							}
+						}
+					}
+					else {
+						tbody.appendChild(rowcopy);
+					}
+					row = rowcopy;
+				}
 
-				//NEED TO ACCOUNT FOR PROJECT CHANGING STATUS
-
-				var row = FUSION.get.node(typ + "_row_" + iid);
 				row.children[1].innerHTML = FUSION.lib.titleCase(itm['status'].split("_").join(" "));
-
 				var spn = FUSION.get.node("server_status_span_" + iid);
 				if(hash['up_or_down']) {
 					spn.className = "glyphicon glyphicon-ok server_status_up";
@@ -146,10 +231,43 @@ function getItemInfo(i)
 	var info = {
 		"type": "GET",
 		"path": "/" + prj + "s/1/get" + FUSION.lib.titleCase(prj) + "Info",
-		"data": { "item_id": iid	},
+		"data": { "item_id": iid },
 		"func": showAddItem
 	};
 	FUSION.lib.ajaxCall(info);
+}
+
+
+function removeItem(i)
+{
+	var id = i || "";
+	if(FUSION.lib.isBlank(id)) {
+		FUSION.lib.alert("Can't remove item with no id - please refresh the page and try again");
+		return false;
+	}
+
+	var tmp = id.split("_");
+	var prj = tmp[0];
+	var iid = tmp[1];
+
+	var yn = confirm("Are you sure you want to delete this item?");
+	if(yn){
+		var info = {
+			"type": "POST",
+			"path": "/" + prj + "s/1/delete" + FUSION.lib.titleCase(prj),
+			"data": { "item_id": iid },
+			"func": removeItemResponse
+		};
+		FUSION.lib.ajaxCall(info);
+	}
+}
+
+
+function removeItemResponse(h) {
+	var hash  = h || {};
+	var itm = hash['project'];
+	var typ = hash['type'];
+	FUSION.remove.node(typ + "_row_" + itm['id']);
 }
 
 
@@ -158,8 +276,7 @@ function showAddItem(h)
 	var hash  = h || {};
 
 	try {
-		if(typeof hash === "string")
-		{
+		if(typeof hash === "string") {
 			hash = JSON.parse(hash);
 		}
 	}
@@ -199,44 +316,6 @@ function hideNewItem()
 }
 
 
-function removeItem(i)
-{
-	if(FUSION.lib.isBlank(i))
-	{
-		FUSION.lib.alert("Invalid ID - please refresh the page and try again");
-		return false;
-	}
-	else
-	{
-		var yn = confirm("Are you sure you would like to remove this item?");
-		if(yn)
-		{
-			var tmp = i.split("_");
-			var iid = tmp[1];
-
-			var info = {
-				"type": "POST",
-				"path": "php/indexlib.php",
-				"data": {
-					"method":	"removeItem",
-					"libcheck":	true,
-					"itemid":	iid
-				},
-				"func": removeItemResponse
-			};
-			FUSION.lib.ajaxCall(info);
-		}
-	}
-}
-
-
-function removeItemResponse(h)
-{
-	var hash = h || {};
-	FUSION.remove.node("li_" + hash['pageid']);
-}
-
-
 function clearItemForm()
 {
 	FUSION.get.node("id").value = "";
@@ -248,13 +327,6 @@ function clearItemForm()
 	FUSION.get.node("new_item_title").innerHTML = "";
 	FUSION.get.node("status").disabled = false;
 	FUSION.get.node("statusdiv").style.visibility = "visible";
-}
-
-
-function enDisStat(v)
-{
-	FUSION.get.node("status").disabled = (v == "tool") ? true : false;
-	FUSION.get.node("statusdiv").style.visibility = (v == "tool") ? "hidden" : "visible";
 }
 
 

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 	resources :tools do
 		member do
 			get "getToolInfo"
+			post "deleteTool"
 			post "addEditTool"
 		end
 	end
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
 		member do
 			get "getProjectInfo"
 			get "checkAppStatus"
+			post "deleteProject"
 			post "addEditProject"
 		end
 	end
