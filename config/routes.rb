@@ -22,6 +22,14 @@ Rails.application.routes.draw do
 		end
 	end
 
+	get 'weather', to: 'weathers#index', as: :weather
+
+	resources :weathers do
+		member do
+			get "getForecast"
+		end
+	end
+
 	get 'about', to: 'about#index', as: :about
 	get 'about/index'
 

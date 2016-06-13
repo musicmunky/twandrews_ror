@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+	<%= render partial: "shared/weather_head" %>
+
+	<body style="background-color: #EEE;font-family: 'Lato', serif;cursor: default;">
+		<%= render partial: "shared/weather_nav" %>
+		<div id="wrapper" class="container weather-main-wrapper" style="padding-top:60px;">
+
+			<%= yield :weather %>
+
+		</div>
+		<%= render partial: "shared/weather_foot" %>
+	</body>
+</html>
