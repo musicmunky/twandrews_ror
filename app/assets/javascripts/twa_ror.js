@@ -6,7 +6,42 @@ jQuery(document).ready(function() {
 	jQuery("#new_project_link").click(function(){ showAddItem({"project":{"id":0},"type":"project"}); });
 	jQuery("#new_tool_link").click(function(){ showAddItem({"project":{"id":0},"type":"tool"}); });
 
+	try {
+		tinymce.init({ selector: '#resume_summary' });
+		tinymce.init({ selector: '#resume_education' });
+		tinymce.init({ selector: '#resume_skills' });
+		tinymce.init({ selector: '#resume_additional_info' });
+	}
+	catch(err) {}
 });
+
+
+function checkResumeForm() {
+// 	var smmry = FUSION.get.node("resume_summary").value;
+// 	var edctn = FUSION.get.node("resume_education").value;
+// 	var sklls = FUSION.get.node("resume_skills").value;
+// 	var ainfo = FUSION.get.node("resume_additional_info").value;
+
+	var smmry = tinymce.editors[0].getContent();
+	var edctn = tinymce.editors[1].getContent();
+	var sklls = tinymce.editors[2].getContent();
+	var ainfo = tinymce.editors[3].getContent();
+
+//	alert("SUMMARY: " + smmry + "\nEDUCATION: " + edctn + "\nSKILLS: " + sklls + "\nADDITIONALINFO: " + ainfo);
+//	return false;
+
+	if(FUSION.lib.isBlank(smmry) || FUSION.lib.isBlank(edctn) || FUSION.lib.isBlank(sklls) || FUSION.lib.isBlank(ainfo))
+	{
+		alert("Please make sure you have entered a summary, your skills, your education, and a little additional information!");
+		return false;
+	}
+	return true;
+}
+
+
+function checkResumeEntryForm() {
+	return true;
+}
 
 
 function updateItem()

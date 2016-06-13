@@ -1,0 +1,37 @@
+<%= tinymce_assets %>
+<%= form_for(@resume, html: { class: "rails_form", style: 'height:1550px;width:800px;' }) do |f| %>
+
+	<% if @resume.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@resume.errors.count, "error") %> prohibited this resume_entry from being saved:</h2>
+			<ul>
+			<% @resume.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div class="field w100fl" style="margin-bottom:50px;">
+		<%= f.label :summary, { style:"font-size:18px" } %><br>
+		<%= f.text_area :summary, { class: "tinymce", style: "height:150px" } %>
+	</div>
+	<div class="field w100fl" style="margin-bottom:50px;">
+		<%= f.label :education, { style:"font-size:18px" } %><br>
+		<%= f.text_area :education, { class: "tinymce", style: "height:150px" } %>
+	</div>
+	<div class="field w100fl" style="margin-bottom:50px;">
+		<%= f.label :skills, { style:"font-size:18px" } %><br>
+		<%= f.text_area :skills, { class: "tinymce", style: "height:150px" } %>
+	</div>
+	<div class="field w100fl" style="margin-bottom:50px;">
+		<%= f.label :additional_info, { style:"font-size:18px" } %><br>
+		<%= f.text_area :additional_info, { class: "tinymce", style: "height:150px" } %>
+		<%= tinymce %>
+	</div>
+	<div class="actions w100fl">
+		<%= f.submit "Submit", { class: "btn btn-success", style: "float:left;width:150px;", onclick: "return checkResumeForm();" } %>
+		<%= link_to 'Back', resumes_path, { class: "btn btn-primary", style: "float:right;width:150px;" } %>
+	</div>
+
+<% end %>

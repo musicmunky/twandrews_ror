@@ -1,5 +1,7 @@
 class ResumeEntry < ActiveRecord::Base
 
+	belongs_to :resume
+
 	def date_difference
 		sd = self.start_date
 		ed = self.is_current? ? Time.now : self.end_date

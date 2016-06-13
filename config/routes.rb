@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-
-  resources :resume_entries
+	resources :resumes
+	resources :resume_entries
 	resources :timesheets
 	devise_for :users, :controllers => { registrations: 'registrations' }
 
@@ -25,8 +25,8 @@ Rails.application.routes.draw do
 	get 'about', to: 'about#index', as: :about
 	get 'about/index'
 
-	get 'resume', to: 'resume#index', as: :resume
-	get 'resume/index'
+#	get 'resume', to: 'resume#index', as: :resume
+#	get 'resume/index'
 
 	root to: 'welcome#index'
 	get 'welcome/index'

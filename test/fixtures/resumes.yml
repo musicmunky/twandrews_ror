@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  summary: MyText
+  education: MyText
+  skills: MyText
+  additional_info: MyText
+
+two:
+  summary: MyText
+  education: MyText
+  skills: MyText
+  additional_info: MyText

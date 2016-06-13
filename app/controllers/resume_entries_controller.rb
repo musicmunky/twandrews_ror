@@ -33,7 +33,7 @@ class ResumeEntriesController < ApplicationController
 
 		respond_to do |format|
 			if @resume_entry.save
-				format.html { redirect_to resume_url, notice: 'Resume entry was successfully created.' }
+				format.html { redirect_to resumes_url, notice: 'Resume entry was successfully created.' }
 				format.json { render :show, status: :created, location: @resume_entry }
 			else
 				format.html { render :new }
@@ -52,7 +52,7 @@ class ResumeEntriesController < ApplicationController
 
 		respond_to do |format|
 			if @resume_entry.update(resume_entry_params)
-				format.html { redirect_to resume_url, notice: 'Resume entry was successfully updated.' }
+				format.html { redirect_to resumes_url, notice: 'Resume entry was successfully updated.' }
 				format.json { render :show, status: :ok, location: @resume_entry }
 			else
 				format.html { render :edit }

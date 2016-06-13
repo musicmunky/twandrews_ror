@@ -1,0 +1,56 @@
+<% content_for :main do %>
+	<% fname = current_user.nil? ? "Tim" : current_user.first_name %>
+	<h3><%= fname %>'s Resume
+		<% if user_signed_in? %>
+			<%= link_to 'New Entry', new_resume_entry_path, { class: "btn btn-default btn-xs", style: "float:right;margin-top:2px;padding-left:10px;padding-right:10px;" } %>
+		<% end %>
+	</h3>
+
+	<!-- Summary section //-->
+	<span class="w100fl resume_heading">Summary</span>
+	<div class="w100fl resume_entry">
+		<%= @resume.summary.html_safe %>
+	</div>
+
+	<!-- Skills section //-->
+	<span class="w100fl resume_heading">Skills Overview</span>
+	<div class="w100fl resume_entry">
+		<%= @resume.skills.html_safe %>
+	</div>
+
+
+	<!-- Education section //-->
+	<span class="w100fl resume_heading">Education</span>
+	<div class="w100fl resume_entry">
+		<%= @resume.education.html_safe %>
+	</div>
+
+	<!-- Experience section //-->
+	<span class="w100fl resume_heading">Previous Experience</span>
+	<% @resume_entries.each do |resume_entry| %>
+		<div class="w100fl resume_entry">
+			<div class="resume_position">
+				<h4><i><%= resume_entry.position %></i>
+					<% if user_signed_in? %>
+						<%= link_to 'Edit', edit_resume_entry_path(resume_entry), { class: "btn btn-default btn-xs edit_entry_btn" } %>
+					<% end %>
+				</h4>
+				<% diff = resume_entry.date_difference %>
+				<span class="w100fl">
+					<% if resume_entry.company_url.nil? or resume_entry.company_url.blank? %>
+						<%= resume_entry.company %>
+					<% else %>
+						<a href="<%= resume_entry.company_url %>" target="_blank"><%= resume_entry.company %></a>
+					<% end %>
+				</span>
+				<span class="w100fl">
+					<% enddate = resume_entry.is_current? ? "Present" : resume_entry.end_date.strftime("%b, %Y") %>
+					<%= resume_entry.start_date.strftime("%b, %Y") %> - <%= enddate %>
+					<i>(<%= "#{diff[0]} years, #{diff[1]} months" %>)</i>
+				</span>
+				<p><%= resume_entry.description.html_safe %></p>
+			</div>
+		</div>
+	<% end %>
+
+<% end %>
