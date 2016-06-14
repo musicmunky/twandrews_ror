@@ -16,7 +16,7 @@ var MYWEATHER = {
 };
 
 $( document ).ready(function() {
-
+/*
 	//IE doesn't like Google fonts...apparently it's Google's fault
 	//at the moment, but whatever...load Web Safe font for IE users
 	var gbr = FUSION.get.browser();
@@ -83,7 +83,7 @@ $( document ).ready(function() {
 		//just load the info by the default Zip code (10001)
 		runSearch(dzip);
 	}
-
+*/
 });
 
 

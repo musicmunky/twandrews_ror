@@ -10,9 +10,6 @@ html, body {
 	background-color:#EEE;
 	font-family: 'Lato', serif;
 	cursor:default;
-/* 	font-family: 'Open Sans', serif; */
-/* 	font-family:"Trebuchet MS", Helvetica, sans-serif; */
-/* 	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif; */
 }
 
 a {
@@ -26,6 +23,37 @@ a {
 
 .fr {
 	float:right;
+}
+
+.weather-navbar {
+	height: 60px !important;
+	background-color:#FFF !important;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), -1px 0 0 rgba(0, 0, 0, 0.03), 1px 0 0 rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.12);
+	border:none;
+}
+
+.weather-footer {
+	position: fixed;
+	bottom: 0;
+	height: 30px;
+	opacity: .95;
+	width: 100%;
+	background-color: #FFF;
+	z-index: 1000;
+	font-size: 14px;
+	color: #666;
+	line-height: 30px;
+	box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(0, 0, 0, 0.03), 0 0 1px 1px rgba(0, 0, 0, 0.03), 0 0 1px 1px rgba(0, 0, 0, 0.12);
+}
+
+.weather-main-wrapper {
+	background-color: #FFF;
+	height: calc(100% - 30px);
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-height: 700px;
 }
 
 .mainwrapper {
@@ -69,11 +97,9 @@ a {
 	margin-right:10px;
 	border:0px none;
 	outline:medium none;
-/* 	display:block; */
 	float:right;
 	background-color:#FFF;
 	line-height:60px;
-/* 	height:60px; */
 	height:100%;
 	width:30px;
 }
@@ -212,11 +238,6 @@ a {
 	float:left;
 }
 
-.container {
-	height: auto;
-	width: 100%;
-}
-
 .citydiv {
 	width:25%;
 	float:left;
@@ -314,10 +335,6 @@ a {
     position: relative;
     text-align: center;
     width: 125px;
-}
-
-.hourofday:hover {
-/* 	box-shadow: 0 2px 3px 0px #CCC; */
 }
 
 .headspan {

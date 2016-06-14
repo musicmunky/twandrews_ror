@@ -1,23 +1,38 @@
-<!-- Fixed navbar -->
-<div class="navbar navbar-inverse navbar-fixed-top weather-navbar" role="navigation">
-  <!--<div class="container">-->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle Navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-		<li class="<%= is_active('about') %>">STUFF HERE</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>blah1</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-<!--  </div>//-->
+<div id="header" class="header">
+	<div id="headercont" class="header-content">
+		<div class="header-logo">
+			<div class="logowrapper">
+				<div class="title">
+					<img id="logo" src="assets/weatherlogo.png" class="logoimage" />
+					<div id="titlediv" class="titletext">MyWeather</div>
+				</div>
+			</div>
+			<div id="datediv" class="h100fl">
+				<div id="datewrapper" class="h100fl">
+					<span id="date" class="headspan"><%= Time.now.strftime("%A / %h %d, %Y") %></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="header-search">
+			<div class="w100fl h100fl" id="srchcont">
+				<span class="fl">Search: </span>
+				<form class="h100fl" id="searchform" onsubmit="runSearch();return false;">
+					<input type="text" id="searchbox" value="" class="searchbox"
+						   onkeyup="hideSearchDiv(this)" onchange="hideSearchDiv(this)" />
+					<button class="srchbtn">
+						<img src="assets/iconic/magnifying-glass-2x.png" id="srchicn" />
+					</button>
+				</form>
+			</div>
+			<div id="locselect" class="locdiv"></div>
+		</div>
+		<div class="header-units">
+			<span class="fl unitspan">Units: </span>
+			<input class="css-checkbox" type="radio" name="unitradio" id="unitsus" value="us" onclick="setUnits(this.value)" checked />
+			<label class="css-label" for="unitsus">F</label>
+			<input class="css-checkbox" type="radio" name="unitradio" id="unitsca" value="ca" onclick="setUnits(this.value)" />
+			<label class="css-label" for="unitsca">C</label>
+		</div>
+	</div>
 </div>
-
-

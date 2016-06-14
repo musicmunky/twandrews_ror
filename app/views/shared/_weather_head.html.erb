@@ -1,14 +1,15 @@
 <head>
 	<%= favicon_link_tag  'faviconweather.ico' %>
 	<title>MyWeather</title>
-	<%= stylesheet_link_tag "application", media: "all" %>
-	<%#= stylesheet_link_tag params[:controller] %>
-<!--	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lobster" />//-->
-<!--	<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Cutive+Mono" />//-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+	<%= stylesheet_link_tag    'weather_application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'weather_application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
+
+	<%#= stylesheet_link_tag "application", media: "all" %>
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato">
 
-	<%= javascript_include_tag "application" %>
+	<%#= javascript_include_tag "application" %>
 	<%#= javascript_include_tag params[:controller] %>
-	<%= csrf_meta_tags %>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
