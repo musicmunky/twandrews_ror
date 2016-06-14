@@ -3,10 +3,78 @@
 <!-- default to NYC if there's no localStorage -->
 <input type="hidden" id="defaultzipcode" value="10001" />
 
-
-<h1 style="color:#333;">
-	FOOBAR
-</h1>
-
+<div id="mainwrapper" class="mainwrapper">
+	<div class="oldcitywrapper">
+		<div id="oldcitydiv" class="w100fl h100fl"></div>
+	</div>
+	<div class="forecast">
+		<div id="today" class="w100fl">
+			<div class="w50fl">
+				<div class="tfcdiv locdispwrapper">
+					<span id="location" class="locationspan tac"></span>
+					<div class="locwrapper">
+						<div class="loccanvaswrapper">
+							<canvas width="50" height="50" id="condimg"></canvas>
+							<span id="condition"></span>
+							<input type="hidden" id="condition_cnvrt" value="" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="w50fl tfcbtm">
+				<div class="tfcdiv">
+					<div class="tfcheader" id="tfcheadertext">
+						Today's Forecast
+					</div>
+					<div class="tfcdivinner" id="condinfo">
+						<div id="dailyfrc" onclick="showCondition('conditiontext')"></div>
+						<input type="hidden" id="conditiontext" value="" />
+					</div>
+					<div class="tfcdivinner" id="windinfo">
+						<div id="windlabel">Wind:</div>
+						<div id="wind"></div>
+						<input type="hidden" id="wind_cnvrt" value="" />
+					</div>
+					<div class="tfcdivinner" id="suntimes">
+						<div class="w100fl">
+							<div class="innerw50fl">Sunrise:</div>
+							<div id="sunrise"></div>
+						</div>
+						<div class="w100fl">
+							<div class="innerw50fl">Sunset:</div>
+							<div id="sunset"></div>
+						</div>
+					</div>
+					<div class="tfcheader todayhilo">
+						<div class="innerw50fl">
+							<span class="wrmclr" id="high"></span>
+							<input type="hidden" id="high_cnvrt" value="" />
+						</div>
+						<div class="innerw50fl">
+							<span class="cldclr" id="low"></span>
+							<input type="hidden" id="low_cnvrt" value="" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="hourwrapper" class="w100fl hourwrapper">
+			<%= render 'shared/weather_hours', index: 1 %>
+			<%= render 'shared/weather_hours', index: 2 %>
+			<%= render 'shared/weather_hours', index: 3 %>
+			<%= render 'shared/weather_hours', index: 4 %>
+			<%= render 'shared/weather_hours', index: 5 %>
+			<%= render 'shared/weather_hours', index: 6 %>
+			<%= render 'shared/weather_hours', index: 7 %>
+			<%= render 'shared/weather_hours', index: 8 %>
+		</div>
+		<div id="daywrapper" class="w100fl daywrapper">
+			<%= render 'shared/weather_days', index: 2 %>
+			<%= render 'shared/weather_days', index: 3 %>
+			<%= render 'shared/weather_days', index: 4 %>
+			<%= render 'shared/weather_days', index: 5 %>
+		</div>
+	</div>
+</div>
 
 <% end %>

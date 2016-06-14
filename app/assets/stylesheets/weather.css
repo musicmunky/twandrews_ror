@@ -315,10 +315,18 @@ a {
     box-shadow: 0 0 1px 1px #CCC;
     float: left;
     height: 175px;
-    margin: 0 15px;
+/*     margin: 0 15px; */
     position: relative;
     text-align: center;
-    width: 220px;
+/*     width: 220px; */
+    width: 100%;
+}
+
+.dayouter {
+	width:25%;
+	padding-left:15px;
+	padding-right:15px;
+	float:left;
 }
 
 .hourofday {
@@ -334,7 +342,8 @@ a {
     height: 205px;
     position: relative;
     text-align: center;
-    width: 125px;
+/*     width: 125px; */
+	width: 12.5%;
 }
 
 .headspan {

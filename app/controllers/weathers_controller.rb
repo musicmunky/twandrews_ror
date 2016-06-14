@@ -9,4 +9,8 @@ class WeathersController < ApplicationController
 	end
 
 
+	def getGeocodeLookup
+	end
+
+
 end

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 	resources :weathers do
 		member do
 			get "getForecast"
+			get "getGeocodeLookup"
 		end
 	end
 
