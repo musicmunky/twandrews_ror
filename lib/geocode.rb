@@ -45,7 +45,20 @@ class Geocode
 				respjson = JSON.parse(response.body)
 				self.geocode_data = respjson['results']
 
-				locations = {}
+				locations = {
+					"latitude"          => getLatLongInformation(0, "lat"),
+					"longitude"         => getLatLongInformation(0, "lng"),
+					"city"              => getAddressComponents(0, "city"),
+					"suburb"            => getAddressComponents(0, "suburb"),
+					"state"             => getAddressComponents(0, "state"),
+					"zip_code"          => getAddressComponents(0, "zipcode"),
+					"country"           => getAddressComponents(0, "country"),
+					"place_id"          => getPlaceInformation(0, "place_id"),
+					"formatted_address" => getPlaceInformation(0, "formatted_address")
+				}
+# keeping things simple for now and only returning the first result, so you need to be
+# more specific in your search request
+=begin
 				(0..respjson['results'].size - 1).each do |i|
 					pid = respjson['results'][i]['place_id']
 					locations[pid] = {
@@ -60,7 +73,7 @@ class Geocode
 						"formatted_address" => getPlaceInformation(i, "formatted_address")
 					}
 				end
-
+=end
 				result['status'] = respjson['status']
 				result['code']   = response.code.to_i
 				result['count']  = respjson['results'].size

@@ -73,8 +73,10 @@ a {
 	padding-top:61px;
 	margin:0 0 15px -10px;
 	border-bottom:1px solid rgba(0,0,0,0.07);
-	height:42px;
-	width:1020px;
+/* 	height:42px; */
+	height:102px;
+/* 	width:1020px; */
+	width:calc(100% + 20px);
 	background-color:#FFF;
 	color:#333;
 }
@@ -84,7 +86,8 @@ a {
 	width:190px;
 	text-align:left;
 	border:1px solid #DDD;
-	height:22px;
+/* 	height:22px; */
+	height:28px;
 	line-height:18px;
 	padding-left:5px;
 	top:18px;
@@ -146,7 +149,7 @@ a {
 }
 
 .innerfooter {
-	width: 1020px;
+	width: 1000px;
 	margin-left:auto;
 	margin-right:auto;
 }
@@ -498,7 +501,8 @@ a {
 	width:auto;
 	margin:5px 0 8px 0;
 	font-size:14px;
-	height:70px;
+/* 	height:70px; */
+	height:80px;
 	background-color:#fff;
 	color:#333;
 	border-bottom:1px solid #EEE;
@@ -509,7 +513,8 @@ a {
 .conspan {
 	display:block;
 	width:150px;
-	height:40px;
+/* 	height:40px; */
+	height:60px;
 	padding-top:15px;
 	line-height:20px;
 	float:left;
@@ -526,9 +531,9 @@ a {
 
 .tempdiv {
 	width:33%;
-	line-height:40px;
 	font-size:20px;
 	height:40px;
+	line-height:40px;
 }
 
 .hightemp {
@@ -573,7 +578,8 @@ a {
 
 .hrtimediv {
     font-size: 14px;
-    height: 20px;
+/*     height: 20px; */
+    height: 30px;
     padding-top: 7px;
     width: 100%;
 	line-height:20px;
@@ -619,8 +625,9 @@ a {
 .header-search {
 	float:right;
 	height:100%;
-	padding-right:50px;
-	width:320px;
+/* 	padding-right:50px; */
+/* 	width:320px; */
+	width:350px;
 }
 
 .footer-content-left {

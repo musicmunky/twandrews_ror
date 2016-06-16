@@ -16,7 +16,7 @@ var MYWEATHER = {
 };
 
 $( document ).ready(function() {
-/*
+
 	//IE doesn't like Google fonts...apparently it's Google's fault
 	//at the moment, but whatever...load Web Safe font for IE users
 	var gbr = FUSION.get.browser();
@@ -46,7 +46,7 @@ $( document ).ready(function() {
 				//any other weirdness
 				try {
 					lso = JSON.parse(lss);
-					if(lso.placeid) {
+					if(lso.place_id) {
 						lsa.push(lso);
 					}
 				}
@@ -83,13 +83,13 @@ $( document ).ready(function() {
 		//just load the info by the default Zip code (10001)
 		runSearch(dzip);
 	}
-*/
+
 });
 
 
 function setUnits(u)
 {
-	var units = u;
+	var units = u || "us";
 	try {
 		if(MYWEATHER.validunits.indexOf(units) > -1){
 			localStorage.setItem("defaultunits", units);
@@ -230,12 +230,10 @@ function runSearch(s)
 	var units = $("input[name=unitradio]:checked").val();
 	var info = {
 		"type": "GET",
-		"path": "php/weatherlib.php",
+		"path": "weathers/1/getForecastSearch",
 		"data": {
-			"method": 		"getWeatherInfo",
-			"libcheck": 	true,
-			"searchstring": val,
-			"units": 		units
+			"search": val,
+			"units":  units
 		},
 		"func": runSearchResponse
 	};
@@ -249,14 +247,10 @@ function locationClick(h)
 	var units = $("input[name=unitradio]:checked").val();
 	var info = {
 		"type": "GET",
-		"path": "php/weatherlib.php",
+		"path": "weathers/1/getForecastLatLong",
 		"data": {
-			"method": 		"getForecastInfo",
-			"libcheck": 	true,
-			"latitude": 	hash.lat,
-			"longitude": 	hash.lng,
-			"geoinfo": 		hash,
-			"units": 		units
+			"geoinfo": hash,
+			"units":   units
 		},
 		"func": runSearchResponse
 	};
@@ -283,12 +277,12 @@ function runSearchResponse(h)
 			{
 				locs++;
 				geoinfo = hash[key];
-				ad = (FUSION.get.node("geocodeid" + geoinfo.placeid) === null) ? true : false;
-				ls = (localStorage.getItem("geocodeid" + geoinfo.placeid) === null) ? true : false;
+				ad = (FUSION.get.node("geocodeid" + geoinfo.place_id) === null) ? true : false;
+				ls = (localStorage.getItem("geocodeid" + geoinfo.place_id) === null) ? true : false;
 
 				var div = FUSION.lib.createHtmlElement({"type":"div",
 														"attributes":{"class":"loclinkdiv"}});
-				var lnk = FUSION.lib.createHtmlElement({"type":"a","text":geoinfo.address,
+				var lnk = FUSION.lib.createHtmlElement({"type":"a","text":geoinfo.formatted_address,
 														"style":{
 															"textDecoration":"none",
 															"color":"#EEE",
@@ -323,14 +317,7 @@ function processForecast(h)
 	//names should make it clear what each line is doing
 	var hash = h || {};
 
-	var geoinfo = {};
-	for(var key in hash)
-	{
-		if(/^geocodeid/.test(key))
-		{
-			geoinfo = hash[key];
-		}
-	}
+	var geoinfo = hash['geodata']['data'];
 
 	//NEED TO REEXAMINE THE OBJSIZE FUNCTION...ITS ADDING A CHILD FOR THE NUMBER OF RESULTS
 	if(FUSION.get.objSize(geoinfo) > 1)
@@ -339,22 +326,22 @@ function processForecast(h)
 		var tu = (units == "us") ? "F" : "C";
 		var su = (units == "us") ? "mph" : "kph";
 
-		var adv = (FUSION.get.node("geocodeid" + geoinfo.placeid) === null) ? true : false;
-		var lcs = (localStorage.getItem("geocodeid" + geoinfo.placeid) === null) ? true : false;
+		var adv = (FUSION.get.node("geocodeid" + geoinfo.place_id) === null) ? true : false;
+		var lcs = (localStorage.getItem("geocodeid" + geoinfo.place_id) === null) ? true : false;
 
-		FUSION.get.node("footerlocation").innerHTML = geoinfo.address;
-		FUSION.get.node("location").innerHTML = geoinfo.address;
+		FUSION.get.node("footerlocation").innerHTML = geoinfo.formatted_address;
+		FUSION.get.node("location").innerHTML = geoinfo.formatted_address;
 		var sb = FUSION.get.node("searchbox");
 		sb.value = "";
 		hideSearchDiv(sb);
 
-		var nreq = 1000 - parseInt(hash['numberofreqs']);
+		var nreq = 1000 - parseInt(hash['forecast']['num_reqs']);
 		FUSION.get.node("numreqs").innerHTML = "(" + nreq + ")";
 
 		//offset for location timezone and user timezone
  		var rnow = new Date();
  		var tzos = rnow.getTimezoneOffset() / 60;
-		var ofst = 3600 * (tzos + hash['timezone']['offset']);
+		var ofst = 3600 * (tzos + hash['forecast']['tz_offset']);
 
 		var rain = 0;
 		var wind = 0;
@@ -371,7 +358,7 @@ function processForecast(h)
 			}
 		});
 
-		var hrly = hash['hourly'];
+		var hrly = hash['forecast']['hourly'];
 		var hrtp = {};
 		var hrwd = {};
 		var hitp = {};
@@ -402,8 +389,8 @@ function processForecast(h)
 			skycons.add("hricon" + ipp, hrly[i]['icon']);
 		}
 
-		var crnt = hash['current'];
-		var daly = hash['daily'];
+		var crnt = hash['forecast']['current'];
+		var daly = hash['forecast']['daily'];
 
 		var ct = new Date((crnt['time'] + ofst) * 1000);
 		var dstr = MYWEATHER.fulldays[ct.getDay()] + " / " + MYWEATHER.months[ct.getMonth()] + " " + ct.getDate() + ", " + ct.getFullYear();
@@ -484,11 +471,11 @@ function addCityDiv(h)
 {
 	var hash = h  || {};
 
-	if(localStorage.getItem("geocodeid" + hash['placeid']) === null)
+	if(localStorage.getItem("geocodeid" + hash['place_id']) === null)
 	{
 		//if no localStorage item exists, create one if possible
 		try {
-			localStorage.setItem("geocodeid" + hash['placeid'], JSON.stringify(hash));
+			localStorage.setItem("geocodeid" + hash['place_id'], JSON.stringify(hash));
 		}
 		catch(err) {
 			FUSION.error.logError(err, "Unable to create localStorage item: ");
@@ -499,7 +486,7 @@ function addCityDiv(h)
 		$(this).css("background-color", "#FFF");
 	});
 
-	if(FUSION.get.node("geocodeid" + hash['placeid']) === null)
+	if(FUSION.get.node("geocodeid" + hash['place_id']) === null)
 	{
 		var div = FUSION.get.node("oldcitydiv");
 		var els = div.getElementsByTagName("div");
@@ -523,8 +510,8 @@ function addCityDiv(h)
 		var ndv = FUSION.lib.createHtmlElement({"type":"div",
 												"style":{ "backgroundColor":"#EEE" },
 												"attributes":{
-													"id": "geocodeid" + hash['placeid'], "class":"citydiv" }});
-		var regstr = hash.address;
+													"id": "geocodeid" + hash['place_id'], "class":"citydiv" }});
+		var regstr = hash.formatted_address;
 
 		var lnk = FUSION.lib.createHtmlElement({"type":"a",
 												"onclick":"locationClick('" + JSON.stringify(hash) + "')",
@@ -536,10 +523,10 @@ function addCityDiv(h)
 												}});
 
 		var img = FUSION.lib.createHtmlElement({"type":"img",
-												"onclick":"removeCityDiv('geocodeid" + hash['placeid'] + "')",
+												"onclick":"removeCityDiv('geocodeid" + hash['place_id'] + "')",
 												"style":{"width":"12px","height":"12px"},
 												"attributes":{
-													"src":"../images/iconic/x-6x.png",
+													"src":"../assets/iconic/x-6x.png",
 													"class":"removespan",
 													"title":"Remove Location" }});
 		ndv.appendChild(lnk);
@@ -547,18 +534,16 @@ function addCityDiv(h)
 
 		//another concession for IE...insertBefore has issues in IE if there are no
 		//existing elements in the parent div.  Because of course it does.
-		if(els.length == 0)
-		{
+		if(els.length == 0)	{
 			div.appendChild(ndv);
 		}
-		else
-		{
+		else {
 			div.insertBefore(ndv, div.childNodes[0]);
 		}
 	}
 	else
 	{
-		FUSION.get.node("geocodeid" + hash['placeid']).style.backgroundColor = "#EEE";
+		FUSION.get.node("geocodeid" + hash['place_id']).style.backgroundColor = "#EEE";
 	}
 }
 
