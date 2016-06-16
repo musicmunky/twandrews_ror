@@ -3,22 +3,23 @@ class Geocode
 	require 'net/http'
 	require 'uri'
 
-	attr_accessor :geocode_data
-	attr_accessor :latitude
-	attr_accessor :longitude
-	attr_accessor :place_id
+	@@lookup = {
+		"suburb"	=> "neighborhood",
+		"localname" => "colloquial_area",
+		"city" 		=> "locality",
+		"state"		=> "administrative_area_level_1",
+		"county"	=> "administrative_area_level_2",
+		"district"	=> "administrative_area_level_3",
+		"aal4"		=> "administrative_area_level_4",
+		"aal5"		=> "administrative_area_level_5",
+		"country"	=> "country",
+		"zipcode"	=> "postal_code"
+	}
 
+	attr_accessor :geocode_data
 
 	def initialize
 		self.geocode_data = {}
-		self.latitude = 0
-		self.longitude = 0
-		self.place_id = ""
-	end
-
-
-	def setGeocodeData(hash)
-		self.geocode_data = hash
 	end
 
 
@@ -42,11 +43,28 @@ class Geocode
 
 			if response.code.to_i == 200
 				respjson = JSON.parse(response.body)
+				self.geocode_data = respjson['results']
+
+				locations = {}
+				(0..respjson['results'].size - 1).each do |i|
+					pid = respjson['results'][i]['place_id']
+					locations[pid] = {
+						"latitude"          => getLatLongInformation(i, "lat"),
+						"longitude"         => getLatLongInformation(i, "lng"),
+						"city"              => getAddressComponents(i, "city"),
+						"suburb"            => getAddressComponents(i, "suburb"),
+						"state"             => getAddressComponents(i, "state"),
+						"zip_code"          => getAddressComponents(i, "zipcode"),
+						"country"           => getAddressComponents(i, "country"),
+						"place_id"          => getPlaceInformation(i, "place_id"),
+						"formatted_address" => getPlaceInformation(i, "formatted_address")
+					}
+				end
+
 				result['status'] = respjson['status']
 				result['code']   = response.code.to_i
 				result['count']  = respjson['results'].size
-				result['data']   = respjson['results']
-				self.geocode_data = respjson['results']
+				result['data']   = locations
 			else
 				raise "Error making request: STATUS CODE #{response.code}, ERROR: #{response.body}"
 			end
@@ -59,42 +77,70 @@ class Geocode
 		end
 	end
 
-=begin
-		public function loadGeoData($srch)
-		{
-			try {
-				$url = $this->getApiUrl();
-				$key = $this->getApiKey();
-				if($srch == "")
-				{
-					throw new Exception("Invalid search string");
-				}
 
-				if($url == "" || $key == "")
-				{
-					throw new Exception("Invalid parameters set for Geocode object - please check value of Key and Url");
-				}
+	def look_up
+		@@lookup
+	end
 
-				$search   = urlencode($srch);
-				$requrl   = $url . "address=" . $search . "&key=" . $key;
-				$content  = file_get_contents($requrl);
-				$rescon   = json_decode($content, true);
 
-				if(!isset($rescon['status']) || $rescon['status'] != "OK")
-				{
-					throw new Exception("Bad result from geocode server - please check parameters and try again");
-				}
+	private
+		def getLatLongInformation(index, key)
+			rval = []
+			begin
+				kval = key
+				data = self.geocode_data[index]
+				rval = data['geometry']['location'][kval]
+			rescue => error
+				rval[0] = "NO_DATA"
+				rval[1] = "ERROR: #{error.message}"
+			ensure
+				return rval
+			end
+		end
 
-				$this->rescnt = count($rescon['results']);
-				$this->geodat = $rescon['results'];
-				$this->status = $rescon['status'];
-			}
-			catch(Exception $e){
-				$this->status = "ERROR: " . $e->getMessage();
-				$this->rescnt = -1;
-				$this->geodat = array("ERROR" => $e->getMessage());
-			}
-		}
-=end
+
+		def getPlaceInformation(index, key)
+			rval = []
+			begin
+				kval = key
+				data = self.geocode_data[index]
+				rval = data[kval]
+			rescue => error
+				rval[0] = "NO_DATA"
+				rval[1] = "ERROR: #{error.message}"
+			ensure
+				return rval
+			end
+		end
+
+
+		def getAddressComponents(index, key)
+			rval = []
+			begin
+				if @@lookup[key].nil?
+					raise "Key not found"
+				end
+				kval = @@lookup[key]
+				data = self.geocode_data[index]
+				addr_comps = data['address_components']
+				flag = 0
+				(0..addr_comps.size - 1).each do |j|
+					if addr_comps[j]['types'][0] == kval
+						rval = { "long_name" => addr_comps[j]['long_name'], "short_name" => addr_comps[j]['short_name'] }
+						flag = 1
+						break
+					end
+				end
+				if flag == 0
+					rval = { "long_name" => "NO_DATA_FOR_KEY #{kval}", "short_name" => "NO_DATA" }
+				end
+			rescue => error
+				rval[0] = "NO_DATA"
+				rval[1] = "ERROR: #{error.message}"
+			ensure
+				return rval
+			end
+		end
+
 
 end
