@@ -41,7 +41,6 @@ class WeathersController < ApplicationController
 
 
 	def getForecastLatLong
-		srch    = params[:search]
 		unit    = params[:units]
 		geodata = params[:geoinfo]
 
