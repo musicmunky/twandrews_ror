@@ -21,10 +21,13 @@ class WeathersController < ApplicationController
 		begin
 			geocode  = Geocode.new
 			geodata  = geocode.getGeocodeInfo(srch)
-			forecast = Forecast.getForecastData(geodata['data']['latitude'], geodata['data']['longitude'], {units: unit})
+			if geodata['status'] != "success"
+				raise "Error fetching forecast: #{geodata['message']}, Error Backtrace: #{geodata['content']}"
+			end
 
+			forecast = Forecast.getForecastData(geodata['data']['latitude'], geodata['data']['longitude'], {units: unit})
 			if forecast['status'] != "success"
-				raise "Error fetching forecast: #{forecast['message']}\nBacktrace: #{forecast['content']}"
+				raise "Error fetching forecast: #{forecast['message']}, Error Backtrace: #{forecast['content']}"
 			end
 
 			content['geodata'] = geodata
@@ -73,6 +76,5 @@ class WeathersController < ApplicationController
 			end
 		end
 	end
-
 
 end

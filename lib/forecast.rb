@@ -70,6 +70,7 @@ class Forecast
 
 	end
 
+
 	def self.valid_units
 		@@validunits
 	end

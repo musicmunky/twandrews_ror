@@ -19,6 +19,7 @@ class Geocode
 
 	attr_accessor :geocode_data
 
+
 	def initialize
 		self.geocode_data = {}
 	end
@@ -83,7 +84,7 @@ class Geocode
 					}
 				end
 =end
-				result['status'] = respjson['status']
+				result['status'] = "success"
 				result['code']   = response.code.to_i
 				result['count']  = respjson['results'].size
 				result['data']   = locations
@@ -164,6 +165,5 @@ class Geocode
 				return rval
 			end
 		end
-
 
 end
