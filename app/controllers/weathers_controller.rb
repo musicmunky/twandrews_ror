@@ -4,6 +4,7 @@ class WeathersController < ApplicationController
 	require 'forecast'
 	require 'geocode'
 
+
 	def index
 	end
 
@@ -21,6 +22,10 @@ class WeathersController < ApplicationController
 			geocode  = Geocode.new
 			geodata  = geocode.getGeocodeInfo(srch)
 			forecast = Forecast.getForecastData(geodata['data']['latitude'], geodata['data']['longitude'], {units: unit})
+
+			if forecast['status'] != "success"
+				raise "Error fetching forecast: #{forecast['message']}\nBacktrace: #{forecast['content']}"
+			end
 
 			content['geodata'] = geodata
 			content['forecast'] = forecast

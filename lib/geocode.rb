@@ -2,6 +2,7 @@ class Geocode
 
 	require 'net/http'
 	require 'uri'
+	require 'logger'
 
 	@@lookup = {
 		"suburb"	=> "neighborhood",
@@ -26,10 +27,14 @@ class Geocode
 	def getGeocodeInfo(search)
 		begin
 			result = {}
+			logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
+			logger.tagged("GEOCODE") { logger.debug "Verifying valid search string..." }
 			if search.to_s == ""
 				raise "Invalid search string"
 			end
 
+			logger.tagged("GEOCODE") { logger.debug "Fetching url and api key..." }
 			@g = Weather.where(service: "google").first
 			url = @g.service_url
 			key = @g.apikey
@@ -37,11 +42,15 @@ class Geocode
 				raise "Invalid parameters set for Geocode object - please check value of Key and Url"
 			end
 
+			logger.tagged("GEOCODE") { logger.debug "Building url query string..." }
 			search = URI::encode(search)
+
+			logger.tagged("GEOCODE") { logger.debug "Search string is: #{search}" }
 			uri = URI("#{url}address=#{search}&key=#{key}")
 			response = Net::HTTP.get_response(uri)
 
 			if response.code.to_i == 200
+				logger.tagged("GEOCODE") { logger.debug "Request received successfully - building hash response..." }
 				respjson = JSON.parse(response.body)
 				self.geocode_data = respjson['results']
 
@@ -79,6 +88,7 @@ class Geocode
 				result['count']  = respjson['results'].size
 				result['data']   = locations
 			else
+				logger.tagged("GEOCODE") { logger.debug "Request failed with status code #{response.code}, Error: #{response.body}" }
 				raise "Error making request: STATUS CODE #{response.code}, ERROR: #{response.body}"
 			end
 		rescue => error
