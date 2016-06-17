@@ -311,7 +311,8 @@ function processForecast(h)
 	//based on the array returned by the server to the AJAX request
 	//names should make it clear what each line is doing
 	var hash = h || {};
-	var geoinfo = hash['geodata']['data'];
+	var pid = Object.keys(hash['geodata']['data'])
+	var geoinfo = hash['geodata']['data'][pid[0]];
 
 	if(FUSION.get.objSize(geoinfo) > 1)
 	{

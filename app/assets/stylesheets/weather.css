@@ -683,6 +683,11 @@ a {
 	}
 	.hour {
 		margin-top:20px;
+		width:25%;
+	}
+	.hourofday {
+		margin-left:10px;
+		margin-right:10px;
 	}
 
 	.hour:hover {
@@ -692,7 +697,15 @@ a {
 	.hourwrapper {
 		margin-top:0px;
 	}
-
+	.dayouter {
+		width: 50%;
+		padding-left: 10px;
+		padding-right: 10px;
+		float: left;
+	}
+	.weather-footer {
+		height: 60px;
+	}
 	.mainwrapper {
 		width:500px;
 		height:1520px;
@@ -700,8 +713,10 @@ a {
 
 	.oldcitywrapper {
 		padding-top:184px;
-		height:84px;
-		width:520px;
+/* 		height:84px; */
+/* 		width:520px; */
+		height:274px;
+		width:498px;
 	}
 
 	.citydiv {
@@ -770,6 +785,20 @@ a {
 		width:50%;
 	}
 
+	#datewrapper {
+		float:right;
+		padding-right:10px;
+	}
+	#searchform {
+		width:calc(100% - 100px);
+	}
+	.searchbox {
+		width:100%;
+	}
+	.srchbtn {
+		margin-right:-40px;
+		margin-top:-2px;
+	}
 	.header {
 		height:183px;
 	}
@@ -833,12 +862,19 @@ a {
 	.hrtimediv {
 		font-size:10px;
 	}
+
+	.dayouter {
+		width:50%;
+	}
 	.day {
-		width:calc(50% - 20px);
-		margin: 0 10px;
+/* 		width:calc(50% - 20px); */
+		width:100%;
+/* 		margin: 0 10px; */
 		margin-bottom:20px;
 	}
-
+	.weather-footer {
+		height:60px;
+	}
 	.conspan {
 		width:55%;
 		font-size:0.9em;
@@ -857,7 +893,6 @@ a {
 	.hour:hover {
 		margin-top:20px;
 	}
-
 	.hourwrapper {
 		margin-top:0px;
 	}
@@ -868,9 +903,10 @@ a {
 	}
 
 	.oldcitywrapper {
-		padding-top:184px;
-		height:84px;
-		width:100%;
+		padding-top: 184px;
+		height: 264px;
+		width: calc(100% + 20px);
+		margin: 0 0 0 -10px;
 	}
 
 	.citydiv {

@@ -25,9 +25,19 @@ class WeathersController < ApplicationController
 				raise "Error fetching forecast: #{geodata['message']}, Error Backtrace: #{geodata['content']}"
 			end
 
+
+
+
+#logger.debug "\n\n\n\n\n\n\n\n\n\n\LATITUDE:#{geodata['data']['latitude']}  LONGITUDE: #{geodata['data']['longitude']}\n\n\n\n\n\n\n\n\n\n\n"
+logger.debug "\n\n\n\n\n\n\n\n\n\n\KEYS: #{geodata['data'].keys[0]}\n\n\n\n\n\n\n\n\n\n\n"
+
+
+
+
 			forecast = {}
 			if geodata['count'] == 1
-				forecast = Forecast.getForecastData(geodata['data']['latitude'], geodata['data']['longitude'], {units: unit})
+				pid = geodata['data'].keys[0]
+				forecast = Forecast.getForecastData(geodata['data'][pid]['latitude'], geodata['data'][pid]['longitude'], {units: unit})
 				if forecast['status'] != "success"
 					raise "Error fetching forecast: #{forecast['message']}, Error Backtrace: #{forecast['content']}"
 				end
@@ -62,7 +72,11 @@ class WeathersController < ApplicationController
 		begin
 			forecast = Forecast.getForecastData(geodata['latitude'], geodata['longitude'], {units: unit})
 
-			content['geodata'] = { "data" => geodata }
+			data = {
+				"data" => { geodata['place_id'] => geodata },
+				"count" => 1
+			}
+			content['geodata']  = data
 			content['forecast'] = forecast
 
 			response['status'] = "success"
