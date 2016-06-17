@@ -261,7 +261,7 @@ function locationClick(h)
 function runSearchResponse(h)
 {
 	var hash = h || {};
-	var rc = hash['result_count'];
+	var rc = hash['geodata']['count'];
 	if(parseInt(rc) > 1)
 	{
 		var locsel = FUSION.get.node("locselect");
@@ -269,17 +269,12 @@ function runSearchResponse(h)
 
 		var geoinfo = {};
 		var locs = 0;
-		var ad = false;
-		var ls = false;
-		for(var key in hash)
+		for(var key in hash['geodata']['data'])
 		{
-			if(/^geocodeid/.test(key) && locs < 5)
+			if(locs < 5)
 			{
 				locs++;
-				geoinfo = hash[key];
-				ad = (FUSION.get.node("geocodeid" + geoinfo.place_id) === null) ? true : false;
-				ls = (localStorage.getItem("geocodeid" + geoinfo.place_id) === null) ? true : false;
-
+				geoinfo = hash['geodata']['data'][key];
 				var div = FUSION.lib.createHtmlElement({"type":"div",
 														"attributes":{"class":"loclinkdiv"}});
 				var lnk = FUSION.lib.createHtmlElement({"type":"a","text":geoinfo.formatted_address,

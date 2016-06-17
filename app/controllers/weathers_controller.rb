@@ -25,11 +25,13 @@ class WeathersController < ApplicationController
 				raise "Error fetching forecast: #{geodata['message']}, Error Backtrace: #{geodata['content']}"
 			end
 
-			forecast = Forecast.getForecastData(geodata['data']['latitude'], geodata['data']['longitude'], {units: unit})
-			if forecast['status'] != "success"
-				raise "Error fetching forecast: #{forecast['message']}, Error Backtrace: #{forecast['content']}"
+			forecast = {}
+			if geodata['count'] == 1
+				forecast = Forecast.getForecastData(geodata['data']['latitude'], geodata['data']['longitude'], {units: unit})
+				if forecast['status'] != "success"
+					raise "Error fetching forecast: #{forecast['message']}, Error Backtrace: #{forecast['content']}"
+				end
 			end
-
 			content['geodata'] = geodata
 			content['forecast'] = forecast
 
