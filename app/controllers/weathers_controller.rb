@@ -53,7 +53,7 @@ class WeathersController < ApplicationController
 
 	def getForecastLatLong
 		unit    = params[:units]
-		geodata = params[:geoinfo]
+		geoinfo = params[:geoinfo]
 
 		response = {}
 		content  = {}
@@ -61,13 +61,13 @@ class WeathersController < ApplicationController
 		message  = ""
 
 		begin
-			forecast = Forecast.getForecastData(geodata['latitude'], geodata['longitude'], {units: unit})
+			forecast = Forecast.getForecastData(geoinfo['latitude'], geoinfo['longitude'], {units: unit})
 
-			data = {
-				"data" => { geodata['place_id'] => geodata },
+			geodata = {
+				"data" => { geoinfo['place_id'] => geoinfo },
 				"count" => 1
 			}
-			content['geodata']  = data
+			content['geodata']  = geodata
 			content['forecast'] = forecast
 
 			response['status'] = "success"
