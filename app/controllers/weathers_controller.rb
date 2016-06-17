@@ -25,15 +25,6 @@ class WeathersController < ApplicationController
 				raise "Error fetching forecast: #{geodata['message']}, Error Backtrace: #{geodata['content']}"
 			end
 
-
-
-
-#logger.debug "\n\n\n\n\n\n\n\n\n\n\LATITUDE:#{geodata['data']['latitude']}  LONGITUDE: #{geodata['data']['longitude']}\n\n\n\n\n\n\n\n\n\n\n"
-logger.debug "\n\n\n\n\n\n\n\n\n\n\KEYS: #{geodata['data'].keys[0]}\n\n\n\n\n\n\n\n\n\n\n"
-
-
-
-
 			forecast = {}
 			if geodata['count'] == 1
 				pid = geodata['data'].keys[0]
