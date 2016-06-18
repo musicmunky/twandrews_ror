@@ -73,9 +73,7 @@ a {
 	padding-top:61px;
 	margin:0 0 15px -10px;
 	border-bottom:1px solid rgba(0,0,0,0.07);
-/* 	height:42px; */
 	height:102px;
-/* 	width:1020px; */
 	width:calc(100% + 20px);
 	background-color:#FFF;
 	color:#333;
@@ -86,7 +84,6 @@ a {
 	width:190px;
 	text-align:left;
 	border:1px solid #DDD;
-/* 	height:22px; */
 	height:28px;
 	line-height:18px;
 	padding-left:5px;
@@ -318,10 +315,8 @@ a {
     box-shadow: 0 0 1px 1px #CCC;
     float: left;
     height: 175px;
-/*     margin: 0 15px; */
     position: relative;
     text-align: center;
-/*     width: 220px; */
     width: 100%;
 }
 
@@ -345,7 +340,6 @@ a {
     height: 205px;
     position: relative;
     text-align: center;
-/*     width: 125px; */
 	width: 12.5%;
 }
 
@@ -501,7 +495,6 @@ a {
 	width:auto;
 	margin:5px 0 8px 0;
 	font-size:14px;
-/* 	height:70px; */
 	height:80px;
 	background-color:#fff;
 	color:#333;
@@ -513,7 +506,6 @@ a {
 .conspan {
 	display:block;
 	width:150px;
-/* 	height:40px; */
 	height:60px;
 	padding-top:15px;
 	line-height:20px;
@@ -569,8 +561,6 @@ a {
 	margin-left:-10px;
 }
 
-.tfcbtm {}
-
 .hourwrapper {
 	margin-top:15px;
 	margin-bottom:10px;
@@ -578,7 +568,6 @@ a {
 
 .hrtimediv {
     font-size: 14px;
-/*     height: 20px; */
     height: 30px;
     padding-top: 7px;
     width: 100%;
@@ -625,8 +614,6 @@ a {
 .header-search {
 	float:right;
 	height:100%;
-/* 	padding-right:50px; */
-/* 	width:320px; */
 	width:350px;
 }
 
@@ -636,24 +623,13 @@ a {
 	text-align:left;
 }
 
-/* .footer-content-center {
-	width:33%;
-	float:left;
-}
-*/
 .footer-content-right {
 	width:20%;
 	float:right;
 	text-align:right;
 }
 
-
-
-
-
-/* ipad */
-@media (min-width : 768px) and (max-width : 1024px) {
-
+@media (min-width : 526px) and (max-width : 1024px) {
 	.header {
 		height:183px;
 	}
@@ -713,8 +689,6 @@ a {
 
 	.oldcitywrapper {
 		padding-top:184px;
-/* 		height:84px; */
-/* 		width:520px; */
 		height:274px;
 		width:498px;
 	}
@@ -743,39 +717,10 @@ a {
 		width:100%;
 		text-align:center;
 	}
+
 }
 
-@media (min-width : 481px) and (max-width : 767px) {
-	h3 {
-		font-size:30px;
-	}
-
-	.condition {
-		left:17%;
-		float: left;
-		top: -18px;
-		position: relative;
-		width: 100%;
-	}
-
-	.condition li {
-		margin-bottom: 5px;
-		display: inline-block;
-		margin-right: 3px;
-	}
-
-	.search_form {
-		margin-top: -15px;
-		width:200px;
-	}
-
-	.btn-group,
-	.bootstrap-select {
-    	width: 100px !important;
-	}
-}
-
-@media (min-width : 320px) and (max-width : 480px) {
+@media (min-width : 320px) and (max-width : 525px) {
 
 	#srchcont {
 		padding-left:10px;
@@ -867,9 +812,7 @@ a {
 		width:50%;
 	}
 	.day {
-/* 		width:calc(50% - 20px); */
 		width:100%;
-/* 		margin: 0 10px; */
 		margin-bottom:20px;
 	}
 	.weather-footer {
@@ -934,5 +877,3 @@ a {
 		text-align:center;
 	}
 }
-
-

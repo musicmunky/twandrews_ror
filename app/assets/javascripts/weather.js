@@ -347,9 +347,7 @@ function processForecast(h)
 		var ipp = 0;
 		var skycons = new Skycons({
 			"monochrome": true,
-			"colors" : {
-				"main": "#444"
-			}
+			"colors" : { "main": "#444" }
 		});
 
 		var hrly = hash['forecast']['hourly'];
@@ -388,7 +386,7 @@ function processForecast(h)
 
 		var ct = new Date((crnt['time'] + ofst) * 1000);
 		var dstr = MYWEATHER.fulldays[ct.getDay()] + " / " + MYWEATHER.months[ct.getMonth()] + " " + ct.getDate() + ", " + ct.getFullYear();
-		FUSION.get.node("date").innerHTML 		= dstr;
+		FUSION.get.node("date").innerHTML = dstr;
 
 		var cntp = { "type":"temperature",
 					 "value":Math.round(crnt['temperature']), "units":units,
