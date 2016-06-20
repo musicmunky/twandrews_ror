@@ -108,8 +108,10 @@ a {
 	position:absolute;
 	color:#FFF;
 	background-color:#333;
-	top:45px;
-	right:95px;
+/* 	top:45px; */
+/* 	right:95px; */
+	top:46px;
+	right:103px;
 	width:250px;
 	height:0px;
 	display:none;

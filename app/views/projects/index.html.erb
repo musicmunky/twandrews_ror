@@ -56,6 +56,8 @@
 	Please choose a Project:
 	<% if user_signed_in? %>
 		<a href="javascript:void(0)" class="btn btn-default btn-xs new_project_btn" id="new_project_link">New Project</a>
+		<% numfeatured = Project.get_featured.size + Tool.get_featured.size %>
+		<input type="hidden" id="num_featured" value="<%= numfeatured %>" />
 	<% end %>
 </h3>
 
@@ -67,6 +69,7 @@
 			<th class="tac" style="width:85px;">Running?</th>
 			<th class="tac" style="width:30px;"></th>
 			<% if user_signed_in? %>
+			<th class="tac" style="width:30px;">Featured?</th>
 			<th class="tac" style="width:30px;"></th>
 			<th class="tac" style="width:30px;"></th>
 			<% end %>
@@ -86,6 +89,10 @@
 						<i class="glyphicon glyphicon-info-sign"></i></a>
 				</td>
 				<% if user_signed_in? %>
+				<td class="vam project_cell tac">
+					<% chkd = project.featured? ? "checked" : "" %>
+					<input type="checkbox" id="featured_project_<%= project.id %>" <%= chkd %> onchange="updateFeatured(this.id, this.checked)" />
+				</td>
 				<td class="vam project_cell tac">
 					<a style="color:#204d74;" title="Edit <%= project.name %>" class="edit_project_link" id="project_<%= project.id %>" href="javascript:void(0)">
 						<i class="glyphicon glyphicon-edit"></i></a>
@@ -112,6 +119,10 @@
 						<i class="glyphicon glyphicon-info-sign"></i></a>
 				</td>
 				<% if user_signed_in? %>
+				<td class="vam project_cell tac">
+					<% chkd = project.featured? ? "checked" : "" %>
+					<input type="checkbox" id="featured_project_<%= project.id %>" <%= chkd %> onchange="updateFeatured(this.id, this.checked)" />
+				</td>
 				<td class="vam project_cell tac">
 					<a style="color:#204d74;" title="Edit <%= project.name %>" class="edit_project_link" id="project_<%= project.id %>" href="javascript:void(0)">
 						<i class="glyphicon glyphicon-edit"></i></a>
@@ -140,6 +151,7 @@
 		<tr>
 			<th style="width:200px;">Name</th>
 			<th style="width:30px;"></th>
+			<th class="tac" style="width:30px;">Featured?</th>
 			<th style="width:30px;"></th>
 			<th style="width:30px;"></th>
 		</tr>
@@ -151,6 +163,10 @@
 				<td class="vam project_cell tac">
 					<a style="color:#5cb85c;" title="Tool Info" href="javascript:void(0)" onclick="showProjectToolInfo('tool_<%= tool.id %>_description')">
 						<i class="glyphicon glyphicon-info-sign"></i></a>
+				</td>
+				<td class="vam project_cell tac">
+					<% chkd = tool.featured? ? "checked" : "" %>
+					<input type="checkbox" id="featured_tool_<%= tool.id %>" <%= chkd %> onchange="updateFeatured(this.id, this.checked)" />
 				</td>
 				<td class="vam project_cell tac">
 					<a style="color:#204d74;" title="Edit <%= tool.name %>" class="edit_project_link" id="tool_<%= tool.id %>" href="javascript:void(0)">

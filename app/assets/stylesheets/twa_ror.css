@@ -1,4 +1,3 @@
-
 .resume_heading {
 	font-size:1.25em;
 	font-weight:bold;
@@ -24,6 +23,13 @@
 	padding-right:10px;
 	margin-left: -10px;
 	width:100%;
+}
+.picwrapper {
+    border-radius: 85px;
+    height: 150px;
+    width: 150px;
+	float:left;
+	margin-right:30px;
 }
 
 .new_project_btn {
@@ -68,7 +74,7 @@
 
 .project_cell {
 	line-height:2.4em !important;
-	font-size:18px;
+	font-size:14px;
 }
 
 a {

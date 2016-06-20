@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613205739) do
+ActiveRecord::Schema.define(version: 20160619135423) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name",        limit: 255
     t.string   "link",        limit: 255
     t.string   "status",      limit: 255
     t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.boolean  "featured",                  default: false
   end
 
   create_table "resume_entries", force: :cascade do |t|
@@ -57,8 +58,9 @@ ActiveRecord::Schema.define(version: 20160613205739) do
     t.string   "name",        limit: 255
     t.string   "link",        limit: 255
     t.text     "description", limit: 65535
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.boolean  "featured",                  default: false
   end
 
   create_table "users", force: :cascade do |t|

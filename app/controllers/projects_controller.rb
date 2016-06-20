@@ -163,8 +163,40 @@ class ProjectsController < ApplicationController
 			content['project'] = project
 			@proj.destroy
 
+			content['num_featured'] = Project.get_featured.size + Tool.get_featured.size
+
 			response['status'] = "success"
 			response['message'] = "Successfully deleted project #{project['name']}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
+	end
+
+
+	def updateFeaturedProject
+		pid = params[:item_id]
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			project_params = { :featured => params[:featured] }
+			@project = Project.find(pid.to_i)
+			@project.update(project_params)
+			content['type'] = "project"
+			content['project'] = @project.attributes
+
+			response['status']  = "success"
+			response['message'] = "Successfully updated project #{@project.name}"
 			response['content'] = content
 		rescue => error
 			response['status'] = "failure"

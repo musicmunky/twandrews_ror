@@ -44,6 +44,52 @@ function checkResumeEntryForm() {
 }
 
 
+function updateFeatured(i, c) {
+	try {
+		var id = i || "";
+		var checked = c;
+		if(FUSION.lib.isBlank(id)) {
+			FUSION.lib.alert("<p>There was a problem getting the item information - please refresh the page and try again</p>");
+			return false;
+		}
+
+		var numfeatured = parseInt(FUSION.get.node("num_featured").value);
+		if(checked && numfeatured >= 4) {
+			FUSION.lib.alert("<p>You are only allowed to feature four projects at a time - please deselect a project or tool to add this one</p>");
+			FUSION.get.node(id).checked = false;
+			return false;
+		}
+
+		numfeatured = checked ? numfeatured + 1 : numfeatured - 1;
+		FUSION.get.node("num_featured").value = numfeatured;
+
+		var id_array = id.split("_");
+		var ptype = id_array[1];
+		var iid = id_array[2];
+		var info = {
+			"type": "POST",
+			"path": "/" + ptype + "s/1/updateFeatured" + FUSION.lib.titleCase(ptype),
+			"data": {
+				"item_id": iid,
+				"featured": checked
+			},
+			"func": updateFeaturedResponse
+		};
+		FUSION.lib.ajaxCall(info);
+	}
+	catch(err){
+		FUSION.lib.alert("Error saving " + ptype + " - please refresh the page and try again");
+		return false;
+	}
+
+}
+
+
+function updateFeaturedResponse(h) {
+	var hash = h || {}
+}
+
+
 function updateItem()
 {
 	try {
@@ -133,6 +179,7 @@ function updateItemResponse(h)
 			var row = FUSION.lib.createHtmlElement({"type":"tr", "attributes":{"id":typ + "_row_" + iid}});
 			var nametd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell"}});
 			var infotd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
+			var feattd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
 			var edittd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
 			var rmovtd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
 
@@ -148,6 +195,12 @@ function updateItemResponse(h)
 			var infotditag = FUSION.lib.createHtmlElement({"type":"i", "attributes":{"class":"glyphicon glyphicon-info-sign"}});
 			infotdlink.appendChild(infotditag);
 			infotd.appendChild(infotdlink);
+
+			//create the "featured" checkbox
+			var featchkbox = FUSION.lib.createHtmlElement({"type":"input",
+														   "onchange":"updateFeatured(this.id, this.checked)",
+														   "attributes":{"type":"checkbox", "id":"feature_" + typ + "_" + itm['id']}});
+			feattd.appendChild(featchkbox);
 
 			//create the edit icon and link
 			var edittdlink = FUSION.lib.createHtmlElement({"type":"a",
@@ -185,6 +238,7 @@ function updateItemResponse(h)
 			}
 			//finally append the info/edit/remove tds to the row
 			row.appendChild(infotd);
+			row.appendChild(feattd);
 			row.appendChild(edittd);
 			row.appendChild(rmovtd);
 			row.appendChild(dscrpt);
@@ -302,7 +356,9 @@ function removeItemResponse(h) {
 	var hash  = h || {};
 	var itm = hash['project'];
 	var typ = hash['type'];
+	var num = hash['num_featured'];
 	FUSION.remove.node(typ + "_row_" + itm['id']);
+	FUSION.get.node("num_featured").value = num;
 }
 
 
@@ -329,7 +385,9 @@ function showAddItem(h)
 	}
 	else {
 		for(var key in itm) {
-			FUSION.get.node(key).value = itm[key];
+			if(key !== "featured") {
+				FUSION.get.node(key).value = itm[key];
+			}
 		}
 	}
 	FUSION.get.node("status").disabled = (typ == "tool") ? true : false;

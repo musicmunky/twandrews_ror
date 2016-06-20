@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-	resources :resumes
 	resources :resume_entries
 	resources :timesheets
 	devise_for :users, :controllers => { registrations: 'registrations' }
@@ -10,6 +9,7 @@ Rails.application.routes.draw do
 			get "getToolInfo"
 			post "deleteTool"
 			post "addEditTool"
+			post "updateFeaturedTool"
 		end
 	end
 
@@ -19,10 +19,14 @@ Rails.application.routes.draw do
 			get "checkAppStatus"
 			post "deleteProject"
 			post "addEditProject"
+			post "updateFeaturedProject"
 		end
 	end
 
 	get 'weather', to: 'weathers#index', as: :weather
+
+	get 'resume', to: 'resumes#index', as: :resume
+	resources :resumes
 
 	resources :weathers do
 		member do
@@ -33,9 +37,6 @@ Rails.application.routes.draw do
 
 	get 'about', to: 'about#index', as: :about
 	get 'about/index'
-
-#	get 'resume', to: 'resume#index', as: :resume
-#	get 'resume/index'
 
 	root to: 'welcome#index'
 	get 'welcome/index'

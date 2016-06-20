@@ -110,8 +110,40 @@ class ToolsController < ApplicationController
 			content['project'] = tool
 			@tool.destroy
 
+			content['num_featured'] = Project.get_featured.size + Tool.get_featured.size
+
 			response['status'] = "success"
 			response['message'] = "Successfully deleted tool #{tool['name']}"
+			response['content'] = content
+		rescue => error
+			response['status'] = "failure"
+			response['message'] = "Error: #{error.message}"
+			response['content'] = error.backtrace
+		ensure
+			respond_to do |format|
+				format.html { render :json => response.to_json }
+			end
+		end
+	end
+
+
+	def updateFeaturedTool
+		tid = params[:item_id]
+
+		response = {}
+		content  = {}
+		status   = ""
+		message  = ""
+
+		begin
+			tool_params = { :featured => params[:featured] }
+			@tool = Tool.find(tid.to_i)
+			@tool.update(tool_params)
+			content['type'] = "tool"
+			content['project'] = @tool.attributes
+
+			response['status']  = "success"
+			response['message'] = "Successfully updated tool #{@tool.name}"
 			response['content'] = content
 		rescue => error
 			response['status'] = "failure"
