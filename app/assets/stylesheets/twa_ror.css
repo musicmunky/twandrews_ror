@@ -26,12 +26,17 @@
 }
 .picwrapper {
     border-radius: 85px;
-    height: 150px;
-    width: 150px;
+    height: 170px;
+    width: 170px;
 	float:left;
 	margin-right:30px;
 }
-
+.header_ptags {
+	text-align: right;
+	margin: 0px !important;
+	line-height: 42px;
+	height: 42px;
+}
 .new_project_btn {
 	float:right;
 	margin-top:2px;
