@@ -14,10 +14,11 @@
       <ul class="nav navbar-nav">
 		<li class="<%= is_active('about') %>"><%= link_to "About", about_path %></li>
         <li class="<%= is_active('projects') %>"><%= link_to("Projects", projects_path) %></li>
+		<% host = request.host_with_port %>
 		<% featured = Project.get_featured + Tool.get_featured %>
 		<% featured.each do |item| %>
 			<% url_array  = /(\w+(\.+\w+)+)/.match(item.link) %>
-			<% url_params = (!url_array.nil? and url_array.size > 0 and url_array[0] == request.host_with_port) ? {} : { target: "_blank" } %>
+			<% url_params = (!url_array.nil? and url_array.size > 0 and url_array[0] == host) ? {} : { target: "_blank" } %>
         	<li class="<%= is_active(item.name.downcase) %>"><%= link_to item.name, item.link, url_params %></li>
 		<% end %>
       </ul>

@@ -38,7 +38,7 @@ $( document ).ready(function() {
 		for(var i = 0; i < localStorage.length; i++)
 		{
 			lss = localStorage.getItem(localStorage.key(i));
-			if(typeof lss !== undefined && localStorage.key(i).match(/^geocodeid/))
+			if(typeof lss !== undefined && /^geocodeid/.test(localStorage.key(i)))
 			{
 				//throwing in a try/catch here, due to IE11 creating *weird* items
 				//that can not be parsed by JSON.  The match statement above
@@ -385,7 +385,7 @@ function processForecast(h)
 		var daly = hash['forecast']['daily'];
 
 		var ct = new Date((crnt['time'] + ofst) * 1000);
-		var dstr = MYWEATHER.fulldays[ct.getDay()] + " / " + MYWEATHER.months[ct.getMonth()] + " " + ct.getDate() + ", " + ct.getFullYear();
+		var dstr = MYWEATHER.days[ct.getDay()] + " / " + MYWEATHER.months[ct.getMonth()] + " " + ct.getDate() + ", " + ct.getFullYear();
 		FUSION.get.node("date").innerHTML = dstr;
 
 		var cntp = { "type":"temperature",

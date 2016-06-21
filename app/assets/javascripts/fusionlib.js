@@ -117,7 +117,9 @@ FUSION.get = {
 
 	//returns the X coordinate of the current mouse position
 	mouseX: function(e) {
-		if (e.pageX) {
+
+		return e.pageX ? e.pageX : e.clientX ? e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft) : null;
+/*		if (e.pageX) {
 			return e.pageX;
 		}
 		if (e.clientX) {
@@ -125,12 +127,14 @@ FUSION.get = {
 									document.documentElement.scrollLeft :
 										document.body.scrollLeft);
 		}
-		return null;
+		return null;*/
 	},
 
 	//returns the Y coordinate of the current mouse position
 	mouseY: function(e) {
-		if (e.pageY) {
+
+		return e.pageY ? e.pageY : e.clientY ? e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) : null;
+/*		if (e.pageY) {
 			return e.pageY;
 		}
 		if (e.clientY) {
@@ -138,7 +142,7 @@ FUSION.get = {
 									document.documentElement.scrollTop :
 										document.body.scrollTop);
 		}
-		return null;
+		return null;*/
 	},
 
 	//returns the size of an object - this is more geared towards JSON or
@@ -786,8 +790,8 @@ FUSION.lib = {
 				for (var key in attrs)
 				{
 					attrname = key;
-					if(key.match(/^class/i)){
-						attrname = (br.browser.match(/ie/i) && parseInt(br.version) < 9) ? "className" : "class";
+					if(/^class/i.test(key)) {
+						attrname = (/ie/i.test(br.browser) && parseInt(br.version) < 9) ? "className" : "class";
 					}
 					el.setAttribute(attrname, attrs[key]);
 				}
@@ -801,7 +805,7 @@ FUSION.lib = {
 				for (var key in styls)
 				{
 					stylename = key;
-					if(key.match(/^float/)){
+					if(/^float/.test(key)){
 						stylename = "cssFloat";
 					}
 					stylearry = styls[key].split(" ");
@@ -1140,7 +1144,6 @@ FUSION.lib = {
 		}
 	},
 };
-
 
 //
 // Regular Expression for URL validation
