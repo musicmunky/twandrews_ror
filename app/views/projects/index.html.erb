@@ -53,7 +53,7 @@
 <% pwidth = user_signed_in? ? "50%" : "100%" %>
 <div style="float:left;width:<%= pwidth %>;">
 <h3>
-	Please choose a Project:
+	Please select a Project
 	<% if user_signed_in? %>
 		<a href="javascript:void(0)" class="btn btn-default btn-xs new_project_btn" id="new_project_link">New Project</a>
 		<% numfeatured = Project.get_featured.size + Tool.get_featured.size %>
@@ -77,7 +77,7 @@
 	</thead>
 
 	<tbody id="completed_project_tbody">
-		<% @cmp_projects.each do |project| %>
+		<% @completed_projects.each do |project| %>
 			<tr id="project_row_<%= project.id %>">
 				<td class="vam project_cell"><%= link_to project.name, project.link, { id:"project_link_#{project.id}", target: "_blank" } %></td>
 				<td class="vam project_cell"><%= project.get_status %></td>
@@ -107,7 +107,7 @@
 		<% end %>
 	</tbody>
 	<tbody id="in_development_project_tbody" style="border-top:none;">
-		<% @dev_projects.each do |project| %>
+		<% @development_projects.each do |project| %>
 			<tr id="project_row_<%= project.id %>">
 				<td class="vam project_cell"><%= link_to project.name, project.link, { id:"project_link_#{project.id}", target: "_blank" } %></td>
 				<td class="vam project_cell"><%= project.get_status %></td>
@@ -142,7 +142,7 @@
 <% if user_signed_in? %>
 <div style="float:right;width:45%;">
 <h3>
-	Please select a Tool:
+	Please select a Tool
 	<a href="javascript:void(0)" class="btn btn-default btn-xs new_project_btn" id="new_tool_link">New Tool</a>
 </h3>
 

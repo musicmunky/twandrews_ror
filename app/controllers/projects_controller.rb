@@ -5,9 +5,9 @@ class ProjectsController < ApplicationController
 	# GET /projects
 	# GET /projects.json
 	def index
-		@cmp_projects = Project.where(status: "completed").order("id ASC")
-		@dev_projects = Project.where(status: "in_development").order("id ASC")
-		@tools = Tool.all
+		@completed_projects   = Project.where(status: "completed").order("id ASC")
+		@development_projects = Project.where(status: "in_development").order("id ASC")
+		@tools = Tool.all.order("id ASC")
 	end
 
 	# GET /projects/1

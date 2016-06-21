@@ -1,6 +1,5 @@
 jQuery(document).ready(function() {
 
-// 	jQuery('.ulnav').on('click', 'a.remlnk', function (event) { removeItem(this.id); });
 	jQuery('.edit_project_link').click(function () { getItemInfo(this.id); });
 	jQuery('.remove_project_link').click(function() { removeItem(this.id) })
 	jQuery("#new_project_link").click(function(){ showAddItem({"project":{"id":0},"type":"project"}); });
@@ -17,18 +16,11 @@ jQuery(document).ready(function() {
 
 
 function checkResumeForm() {
-// 	var smmry = FUSION.get.node("resume_summary").value;
-// 	var edctn = FUSION.get.node("resume_education").value;
-// 	var sklls = FUSION.get.node("resume_skills").value;
-// 	var ainfo = FUSION.get.node("resume_additional_info").value;
 
 	var smmry = tinymce.editors[0].getContent();
 	var edctn = tinymce.editors[1].getContent();
 	var sklls = tinymce.editors[2].getContent();
 	var ainfo = tinymce.editors[3].getContent();
-
-//	alert("SUMMARY: " + smmry + "\nEDUCATION: " + edctn + "\nSKILLS: " + sklls + "\nADDITIONALINFO: " + ainfo);
-//	return false;
 
 	if(FUSION.lib.isBlank(smmry) || FUSION.lib.isBlank(edctn) || FUSION.lib.isBlank(sklls) || FUSION.lib.isBlank(ainfo))
 	{
