@@ -51,8 +51,8 @@
 <% end %>
 
 <% pwidth = user_signed_in? ? "50%" : "100%" %>
-<div style="float:left;width:<%= pwidth %>;">
-<h3>
+<div class="project_wrapper" style="width:<%= pwidth %>;">
+<h3 style="font-size:2.5em;">
 	Please select a Project
 	<% if user_signed_in? %>
 		<a href="javascript:void(0)" class="btn btn-default btn-xs new_project_btn" id="new_project_link">New Project</a>
@@ -140,8 +140,8 @@
 </div>
 
 <% if user_signed_in? %>
-<div style="float:right;width:45%;">
-<h3>
+<div class="tool_wrapper">
+<h3 style="font-size:2.5em;">
 	Please select a Tool
 	<a href="javascript:void(0)" class="btn btn-default btn-xs new_project_btn" id="new_tool_link">New Tool</a>
 </h3>

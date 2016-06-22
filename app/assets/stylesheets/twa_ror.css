@@ -1,3 +1,27 @@
+.header_gradient {
+	/* For the few browsers that dont render gradients */
+	background: #3465B9;
+	/* For Safari 5.1 to 6.0 */
+	background: -webkit-linear-gradient(left, #000010, #3465B9);
+	/* For Opera 11.1 to 12.0 */
+	background: -o-linear-gradient(right, #000010, #3465B9);
+	/* For Firefox 3.6 to 15 */
+	background: -moz-linear-gradient(right, #000010, #3465B9);
+	/* Standard syntax (must be last) */
+	background: linear-gradient(to right, #000010, #3465B9)
+/* 	background: linear-gradient(to right, #DC470C, #2A6496); */
+}
+
+.project_wrapper {
+	float:left;
+	width:50%;
+}
+
+.tool_wrapper {
+	float:right;
+	width:45%;
+}
+
 .resume_heading {
 	font-size:1.25em;
 	font-weight:bold;
@@ -8,6 +32,10 @@
 	padding-left:15px;
 	margin-bottom:15px;
 	border-bottom: 1px solid #CCC;
+}
+
+.resume_entry div {
+	width:100% !important;
 }
 
 .resume_position:hover {
@@ -30,6 +58,10 @@
     width: 170px;
 	float:left;
 	margin-right:30px;
+}
+.header-wrapper {
+	float:right;
+	width:250px;
 }
 .header_ptags {
 	text-align: right;
@@ -272,4 +304,91 @@ ul {
 	border-radius:3px;
 	box-shadow:0 2px 2px -2px #666;
 	padding-top:3px;
+}
+
+@media (max-width : 767px) {
+
+	.navbar-nav {
+		width:100%;
+	}
+}
+
+@media (min-width : 526px) and (max-width : 1024px) {
+
+	.navbar-nav {
+/* 		width:100%; */
+	}
+	.header-wrapper {
+		width:100%;
+	}
+	.header_ptags {
+		text-align:center;
+	}
+	.picwrapper {
+		margin-top:20px;
+	}
+	.page-header {
+		margin-top:60px;
+	}
+	.project_wrapper {
+		float:left;
+		width:100% !important;
+		margin-bottom:50px;
+	}
+	.tool_wrapper {
+		float:left;
+		width:100%;
+	}
+	.rails_form {
+		width:100%;
+	}
+}
+
+@media (min-width : 320px) and (max-width : 525px) {
+
+	h3 {
+		font-size:2.25em !important;
+	}
+
+	.navbar-nav {
+/* 		width:100%; */
+	}
+
+	.project_wrapper {
+		float:left;
+		width:100% !important;
+		margin-bottom:50px;
+	}
+
+	.tool_wrapper {
+		float:left;
+		width:100%;
+	}
+
+	.picwrapper {
+		margin-right:0px;
+		margin-top:20px;
+		width:100%;
+		text-align:center;
+	}
+
+	.page-header {
+		width:100%;
+		text-align:center;
+		line-height:30px !important;
+	}
+
+	.header-wrapper {
+		width:100%;
+	}
+	.header_ptags {
+		text-align:center;
+	}
+
+	.project_cell {
+		font-size:12px;
+	}
+	.rails_form {
+		width:100%;
+	}
 }

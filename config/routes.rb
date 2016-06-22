@@ -2,7 +2,12 @@ Rails.application.routes.draw do
 
 	resources :resume_entries
 	resources :timesheets
+
 	devise_for :users, :controllers => { registrations: 'registrations' }
+
+	devise_scope :user do
+		get 'login', to: 'devise/sessions#new'
+	end
 
 	resources :tools do
 		member do

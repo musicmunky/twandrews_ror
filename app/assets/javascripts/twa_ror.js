@@ -94,7 +94,7 @@ function updateItem()
 		var ptUpr = FUSION.lib.titleCase(ptype);
 
 		var errstr = "";
-		var errcnt = 80;
+		var errhgt = 80;
 
 		if(FUSION.lib.isBlank(id)) {
 			FUSION.lib.alert("<p>There was a problem getting the item information - please refresh the page and try again</p>");
@@ -106,24 +106,24 @@ function updateItem()
 		}
 		if(FUSION.lib.isBlank(pname)) {
 			errstr += "<br>" + ptUpr + " Name";
-			errcnt += 20;
+			errhgt += 20;
 		}
 		if(FUSION.lib.isBlank(plink)) {
 			errstr += "<br>" + ptUpr + " URL / Link";
-			errcnt += 20;
+			errhgt += 20;
 		}
-		else if(!FUSION.lib.checkUrl(plink)) {
+		else if(!FUSION.lib.validUrl(plink)) {
 			errstr += "<br>Valid link needed";
-			errcnt += 20;
+			errhgt += 20;
 		}
 		if(ptype == "project" && FUSION.lib.isBlank(pstat)) {
 			errstr += "<br>" + ptUpr + " Status";
-			errcnt += 20;
+			errhgt += 20;
 		}
 		if(!FUSION.lib.isBlank(errstr)) {
 			FUSION.lib.alert({"message":"Please make sure the following fields are not blank:" + errstr,
 							  "color":"#F00",
-							  "height": errcnt,
+							  "height": errhgt,
 							  "text-align":"center"});
 			return false;
 		}
