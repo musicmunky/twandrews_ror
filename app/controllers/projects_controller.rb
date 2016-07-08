@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
 		begin
 			new_or_edit = "new"
 			update_success = false
-			project_params = { :name => params['name'], :link => params['link'], :status => params['status'], :description => params['description']}
+			project_params = { :name => params['name'], :link => params['link'], :status => params['status'], :description => params['description'] }
 			content['old_status'] = ""
 			content['new_status'] = ""
 
@@ -108,7 +108,6 @@ class ProjectsController < ApplicationController
 				format.html { render :json => response.to_json }
 			end
 		end
-
 	end
 
 
@@ -164,7 +163,6 @@ class ProjectsController < ApplicationController
 			@proj.destroy
 
 			content['num_featured'] = Project.get_featured.size + Tool.get_featured.size
-
 			response['status'] = "success"
 			response['message'] = "Successfully deleted project #{project['name']}"
 			response['content'] = content

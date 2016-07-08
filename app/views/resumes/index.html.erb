@@ -1,6 +1,6 @@
 <% content_for :main do %>
 	<% fname = current_user.nil? ? "Tim" : current_user.first_name %>
-	<h3><%= fname %>'s Resume
+	<h3 style="font-size:2.5em;"><%= fname %>'s Resume
 		<% if user_signed_in? %>
 			<%= link_to 'New Entry', new_resume_entry_path, { class: "btn btn-default btn-xs", style: "float:right;margin-top:2px;padding-left:10px;padding-right:10px;" } %>
 		<% end %>

@@ -1134,7 +1134,7 @@ FUSION.lib = {
 		}
 	},
 
-	checkUrl: function(url) {
+	validUrl: function(url) {
 		try {
 			return rgx_url.test(url);
 		}

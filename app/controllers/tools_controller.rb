@@ -82,7 +82,6 @@ class ToolsController < ApplicationController
 			response['status'] = "success"
 			response['message'] = "Returning data for tool #{@tool.name}"
 			response['content'] = content
-
 		rescue => error
 			response['status'] = "failure"
 			response['message'] = "Error: #{error.message}"

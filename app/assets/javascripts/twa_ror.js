@@ -176,7 +176,9 @@ function updateItemResponse(h)
 			var rmovtd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
 
 			//create name link and add to td
-			var nametdlink = FUSION.lib.createHtmlElement({"type":"a", "attributes":{"href":itm['link'], "target":"_blank", "id":typ + "_link_" + itm['id']}, "text":itm['name']});
+			var nametdlink = FUSION.lib.createHtmlElement({"type":"a",
+														   "text":itm['name'],
+														   "attributes":{"href":itm['link'], "target":"_blank", "id":typ + "_link_" + itm['id']}});
 			nametd.appendChild(nametdlink);
 
 			//create the info icon and link
@@ -198,7 +200,10 @@ function updateItemResponse(h)
 			var edittdlink = FUSION.lib.createHtmlElement({"type":"a",
 														   "style":{"color":"#204d74"},
 														   "onclick":"getItemInfo('" + typ + "_" + itm['id'] + "')",
-														   "attributes":{"href":"javascript:void(0)", "title":"Edit " + itm['name'], "class":"edit_project_link", "id":typ + "_" + itm['id']}});
+														   "attributes":{"href":"javascript:void(0)",
+																		 "title":"Edit " + itm['name'],
+																		 "class":"edit_project_link",
+																		 "id":typ + "_" + itm['id']}});
 			var edittditag = FUSION.lib.createHtmlElement({"type":"i", "attributes":{"class":"glyphicon glyphicon-edit"}});
 			edittdlink.appendChild(edittditag);
 			edittd.appendChild(edittdlink);
@@ -213,17 +218,21 @@ function updateItemResponse(h)
 			rmovtdlink.appendChild(rmovtditag);
 			rmovtd.appendChild(rmovtdlink);
 
-			var dscrpt = FUSION.lib.createHtmlElement({"type":"input", "attributes":{"type":"hidden", "id":typ + "_" + iid + "_" + "description", "value":itm['description']}});
+			var dscrpt = FUSION.lib.createHtmlElement({"type":"input",
+													   "attributes":{"type":"hidden", "id":typ + "_" + iid + "_" + "description", "value":itm['description']}});
 
 			//first append the name td to the row
 			row.appendChild(nametd);
 
 			if(typ == "project") {
 				//if it's a project, create the status and up/down indicator tds and icons
-				var stattd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell"}, "text":$F.lib.titleCase(itm['status'].split("_").join(" "))});
+				var stattd = FUSION.lib.createHtmlElement({"type":"td",
+														   "attributes":{"class":"vam project_cell"},
+														   "text":$F.lib.titleCase(itm['status'].split("_").join(" "))});
 				var updntd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
 				var classnam = itm['up_or_down'] ? "glyphicon glyphicon-ok server_status_up" : "glyphicon glyphicon-remove server_status_down";
-				var updnspan = FUSION.lib.createHtmlElement({"type":"span", "attributes":{"id":"server_status_span_" + itm['id'], "aria-hidden":"true", "class":classnam}})
+				var updnspan = FUSION.lib.createHtmlElement({"type":"span",
+															 "attributes":{"id":"server_status_span_" + itm['id'], "aria-hidden":"true", "class":classnam}})
 				updntd.appendChild(updnspan);
 				row.appendChild(stattd);
 				row.appendChild(updntd);
