@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
 	# this is the catch-all route for pages that people might reach in error,
 	# and will redirect them back to the index page.
-	match '*', via: :all, to: 'welcome#index'
+	#match '*', via: :all, to: 'welcome#index'
+	match "*path", to: redirect('/'), via: :all
 
 end
