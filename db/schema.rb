@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160619135423) do
+ActiveRecord::Schema.define(version: 20160712125140) do
 
   create_table "projects", force: :cascade do |t|
     t.string   "name",        limit: 255
@@ -82,14 +82,5 @@ ActiveRecord::Schema.define(version: 20160619135423) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "weathers", force: :cascade do |t|
-    t.string   "apikey",       limit: 255
-    t.string   "service",      limit: 255
-    t.integer  "reqs_per_day", limit: 4
-    t.string   "service_url",  limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
 
 end

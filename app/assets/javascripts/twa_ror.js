@@ -77,9 +77,7 @@ function updateFeatured(i, c) {
 }
 
 
-function updateFeaturedResponse(h) {
-	var hash = h || {}
-}
+function updateFeaturedResponse(h) { var hash = h || {}; }
 
 
 function updateItem()
@@ -219,7 +217,10 @@ function updateItemResponse(h)
 			rmovtd.appendChild(rmovtdlink);
 
 			var dscrpt = FUSION.lib.createHtmlElement({"type":"input",
-													   "attributes":{"type":"hidden", "id":typ + "_" + iid + "_" + "description", "value":itm['description']}});
+													   "attributes":{
+														   "type":"hidden", 
+														   "id":typ + "_" + iid + "_" + "description",
+														   "value":itm['description']}});
 
 			//first append the name td to the row
 			row.appendChild(nametd);
@@ -232,7 +233,10 @@ function updateItemResponse(h)
 				var updntd = FUSION.lib.createHtmlElement({"type":"td", "attributes":{"class":"vam project_cell tac"}});
 				var classnam = itm['up_or_down'] ? "glyphicon glyphicon-ok server_status_up" : "glyphicon glyphicon-remove server_status_down";
 				var updnspan = FUSION.lib.createHtmlElement({"type":"span",
-															 "attributes":{"id":"server_status_span_" + itm['id'], "aria-hidden":"true", "class":classnam}})
+															 "attributes":{
+																 "id":"server_status_span_" + itm['id'],
+																 "aria-hidden":"true",
+																 "class":classnam}})
 				updntd.appendChild(updnspan);
 				row.appendChild(stattd);
 				row.appendChild(updntd);

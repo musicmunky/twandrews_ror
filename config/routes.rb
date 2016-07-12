@@ -28,17 +28,8 @@ Rails.application.routes.draw do
 		end
 	end
 
-	get 'weather', to: 'weathers#index', as: :weather
-
 	get 'resume', to: 'resumes#index', as: :resume
 	resources :resumes
-
-	resources :weathers do
-		member do
-			get "getForecastSearch"
-			get "getForecastLatLong"
-		end
-	end
 
 	get 'about', to: 'about#index', as: :about
 	get 'about/index'
