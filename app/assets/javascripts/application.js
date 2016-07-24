@@ -11,9 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
-//= require jquery.turbolinks
 //= require bootstrap
 //= require fusionlib
 //= require twa_ror

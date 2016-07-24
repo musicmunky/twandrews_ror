@@ -14,6 +14,7 @@
 			<ul class="nav navbar-nav">
 				<li class="<%= is_active('about') %>"><%= link_to "About", about_path %></li>
 				<li class="<%= is_active('projects') %>"><%= link_to("Projects", projects_path) %></li>
+				<li class="<%= is_active('resumes') %>"><%= link_to("Resume", resume_path) %></li>
 				<% host = request.host_with_port %>
 				<% featured = Project.get_featured + Tool.get_featured %>
 				<% featured.each do |item| %>

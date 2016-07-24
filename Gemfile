@@ -39,6 +39,8 @@ gem 'acts_as_commentable'
 gem 'awesome_print', require:"ap"
 gem 'tinymce-rails'
 
+gem 'addressable'
+
 #gem 'hairtrigger'
 
 gem 'chronic'

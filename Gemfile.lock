@@ -37,6 +37,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     acts_as_commentable (4.0.2)
+    addressable (2.4.0)
     arel (6.0.3)
     awesome_print (1.7.0)
     bcrypt (3.1.11)
@@ -172,6 +173,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_commentable
+  addressable
   awesome_print
   byebug
   chronic
