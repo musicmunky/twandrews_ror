@@ -8,14 +8,21 @@ class WelcomeController < ApplicationController
 		@aHostInfo = []
 		@oHost = {}
 		@sHost = ""
-		if !@referrer.nil? and @referrer.size > 10
-			@oHost = Addressable::URI.parse(@referrer)
-			@oHost.normalize
-			@aHostInfo = @oHost.host.split(".")
-			if @aHostInfo[0] == "www"
-				@aHostInfo.shift
+
+		begin
+			@current_host = Addressable::URI.parse(root_url)
+			if !@referrer.nil? and @referrer.size > 10
+				@oHost = Addressable::URI.parse(@referrer)
+				if @oHost.host != @current_host.host
+					@oHost.normalize
+					@aHostInfo = @oHost.host.split(".")
+					if @aHostInfo[0] == "www"
+						@aHostInfo.shift
+					end
+					@sHost = @aHostInfo.join(".")
+				end
 			end
-			@sHost = @aHostInfo.join(".")
+		rescue
 		end
 	end
 end
